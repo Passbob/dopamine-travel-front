@@ -1,0 +1,41 @@
+.slot-counter {
+  display: inline-flex;
+  font-weight: bold;
+  overflow: hidden;
+  position: relative;
+}
+
+.slot-counter .digit {
+  display: inline-block;
+  min-width: 0.6em;
+  text-align: center;
+  position: relative;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* 강조 효과를 위한 스타일 */
+.slot-counter.highlight .digit {
+  color: #4CAF50;
+  text-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+/* 슬롯머신 효과를 위한 키프레임 애니메이션 */
+@keyframes slotSpin {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(-50%);
+    opacity: 1;
+  }
+  90% {
+    transform: translateY(50%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+} 

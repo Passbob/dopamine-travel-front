@@ -10,13 +10,16 @@
 }
 
 body {
-  background-color: #fcfcfc;
-  color: #333;
+  background-color: #000000;
+  color: #ffffff;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 button {
   cursor: pointer;
+  border: none;
+  outline: none;
 }
 
 a {
@@ -24,7 +27,7 @@ a {
   color: inherit;
 }
 
-/* 애니메이션 효과 */
+/* 공통 애니메이션 효과 */
 @keyframes fadeIn {
   from {
     opacity: 0;
