@@ -37,5 +37,7 @@ export default {
     totalVisits: '/api/total-visits',
     prototypeCities: '/api/prototype/cities',
     prototypeProvinces: '/api/prototype/provinces',
+    prototypeThemes: '/api/prototype/themes',
+    prototypeConstraints: '/api/prototype/constraints',
   }
 }; 

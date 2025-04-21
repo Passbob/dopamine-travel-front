@@ -6,14 +6,16 @@ import './App.css';
 import Main from './pages/Main';
 import Result from './pages/Result';
 import ProvinceSpotlight from './pages/Random/province';
-
+import CityRandom from './pages/Random/city';
+import ThemeRandom from './pages/Random/theme';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/random" element={<ProvinceSpotlight />} />
-        <Route path="/random/city" element={<div>도시 선택 페이지 - 개발 예정</div>} />
+        <Route path="/random/city" element={<CityRandom />} />
+        <Route path="/random/theme" element={<ThemeRandom />} />
         <Route path="/result" element={<Result />} />
       </Routes>
     </Router>

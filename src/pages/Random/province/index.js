@@ -133,7 +133,11 @@ const ProvinceSpotlight = () => {
 
   const handleCitySelection = () => {
     if (selectedProvince) {
-      navigate(`/random/city`, { state: { province: selectedProvince } });
+      navigate(`/random/city`, { 
+        state: { 
+          province: selectedProvince  // 전체 province 객체를 state로 전달
+        }
+      });
     }
   };
 
