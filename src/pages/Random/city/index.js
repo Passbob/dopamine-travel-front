@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getCitiesByProvince } from '../../../api/Random/getAllCitiesAPI';
-import './styles.css';
+import styles from './City.module.css';
 
 const Random = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,8 +65,9 @@ const Random = () => {
     const selectedAngle = (selectedIndex / cities.length) * 360;
     
     // 룰렛이 선택된 도시에서 정확히 멈추도록 각도 조정
-    // 룰렛 위치 = 전체 회전 + 마커 위치 - 선택된 도시의 각도
-    const adjustedRotation = baseRotation + (360 - selectedAngle);
+    // 화살표 위치(0도, 상단)에 선택된 도시가 오도록 조정
+    // 90도를 더해서 화살표(상단)에 도시가 오도록 함
+    const adjustedRotation = baseRotation - selectedAngle;
     
     setRotationDegree(adjustedRotation);
     
@@ -93,43 +94,63 @@ const Random = () => {
 
   // 룰렛에 표시할 도시들의 각도 계산
   const getCityStyles = (index, total) => {
-    const angle = (index / total) * 360;
-    const rotate = `rotate(${angle}deg)`;
+        // 각 섹션당 각도 계산
+        const sectionAngle = 360 / total;
+        // 각 도시 항목의 각도 계산 (0도부터 시작하여 시계 방향으로 배치)
+        // 각 섹션의 중앙에 선이 오도록 섹션 각도의 절반만큼 오프셋 추가
+        const angle2 = (index / total) * 360 + (sectionAngle / 2);
+
+    // 텍스트가 중앙에서 바깥쪽으로 향하도록 90도 회전 추가하고,
+    // 텍스트를 올바른 방향으로 표시하기 위해 180도 추가 회전
+    const rotate = `rotate(${angle2}deg) rotate(-90deg)`;
     return { transform: `${rotate} translateY(-50%)` };
   };
+
+    // 룰렛에 표시할 도시들 이름의 각도 계산
+    const getCitySpanStyles = (index, total) => {
+      // 각 섹션당 각도 계산
+      const sectionAngle = 360 / total;
+      // 각 도시 항목의 각도 계산 (0도부터 시작하여 시계 방향으로 배치)
+      // 각 섹션의 중앙에 선이 오도록 섹션 각도의 절반만큼 오프셋 추가
+      const angle2 = (index / total) * 360 + (sectionAngle / 2);
+  // 텍스트가 중앙에서 바깥쪽으로 향하도록 90도 회전 추가하고,
+  // 텍스트를 올바른 방향으로 표시하기 위해 180도 추가 회전
+  const rotate = `rotate(${angle2}deg)`;
+  return { transform: `${rotate} translateY(-50%)` };
+};
 
   // 페이지 타이틀에 지역 이름 표시 (provinceNo만 있고 province 객체가 없는 경우 대비)
   const provinceName = province?.name || '선택한 지역';
 
   if (isLoading) {
     return (
-      <div className="random-container">
+      <div className={styles.randomContainer}>
         <h1>{provinceName} 도시 랜덤 선택</h1>
-        <div className="loading">
+        <div className={styles.loading}>
           <p>도시 정보를 불러오는 중...</p>
-          <div className="spinner"></div>
+          <div className={styles.spinner}></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="random-container">
+    <div className={styles.randomContainer}>
       <h1>{provinceName} 도시 랜덤 선택</h1>
       
       {cities.length === 0 ? (
-        <div className="error-message">
+        <div className={styles.errorMessage}>
           <p>도시 정보를 불러오는데 실패했습니다.</p>
         </div>
       ) : (
         <>
-          <div className="roulette-container">
+          <div className={styles.rouletteContainer}>
             {/* 회전 마커 */}
-            <div className="roulette-marker"></div>
+            <div className={styles.rouletteMarker}></div>
             
             {/* 룰렛 */}
             <motion.div
-              className="roulette-wheel"
+              className={styles.rouletteWheel}
               ref={rouletteRef}
               animate={{ rotate: rotationDegree }}
               transition={{
@@ -140,38 +161,36 @@ const Random = () => {
               {cities.map((city, index) => (
                 <div
                   key={city.no}
-                  className="roulette-item"
+                  className={styles.rouletteItem}
                   style={getCityStyles(index, cities.length)}
                 >
                   <span>{city.name}</span>
                 </div>
               ))}
             </motion.div>
-            <div className="button-container">
-              <button
-                className="spin-button-custom"
+            <div className={styles.buttonContainer}>
+              {!selectedCity && (<button
+                className={styles.spinButtonCustom}
                 onClick={startSpin}
                 disabled={spinning}
               >
                 {spinning ? '돌아가는 중...' : '룰렛 돌리기'}
-              </button>
-            </div>
-          </div>
-
-          <AnimatePresence>
+              </button>)}
+              <AnimatePresence>
             {selectedCity && !spinning && (
               <motion.div
-                className="result-container"
+                className={styles.resultContainer}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
+                style={{ position: 'absolute', zIndex: 2000, pointerEvents: 'auto' }}
               >
                 <h2>🎉 선택된 도시: {selectedCity.name} 🎉</h2>
                 <p>{selectedCity.description || `${province?.name}의 멋진 도시입니다.`}</p>
-                <div className="result-buttons">
+                <div className={styles.resultButtons}>
                   <button
-                    className="accept-button"
+                    className={styles.acceptButton}
                     onClick={handleAccept}
                   >
                     테마 랜덤
@@ -180,7 +199,9 @@ const Random = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          
+            </div>
+          </div>
+
         </>
       )}
     </div>

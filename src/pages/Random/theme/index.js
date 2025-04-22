@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getAllThemes } from '../../../api/Random/getAllThemeAPI';
 import { getAllConstraints } from '../../../api/Random/getAllConstraintAPI';
-import './styles.css';
+import styles from './Theme.module.css';
 
 const ThemeRandom = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -115,7 +115,7 @@ const ThemeRandom = () => {
 
   const handleAccept = () => {
     if (selectedTheme && selectedConstraint && province && city) {
-      navigate('/result', { 
+      navigate('/course', { 
         state: { 
           province: province,
           city: city,
@@ -164,37 +164,37 @@ const ThemeRandom = () => {
 
   if (isLoading) {
     return (
-      <div className="theme-container">
+      <div className={styles.themeContainer}>
         <h1>{province?.name} {city?.name}</h1>
-        <div className="loading">
+        <div className={styles.loading}>
           <p>테마 정보를 불러오는 중...</p>
-          <div className="spinner"></div>
+          <div className={styles.spinner}></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="theme-container">
+    <div className={styles.themeContainer}>
       <h1>{province?.name} {city?.name}</h1>
       
       {(themes.length === 0 || constraints.length === 0) ? (
-        <div className="error-message">
+        <div className={styles.errorMessage}>
           <p>테마 또는 제약 정보를 불러오는데 실패했습니다.</p>
         </div>
       ) : (
         <>
-          <div className="slot-machine-container">
-            <div className="slot-machine-frame">
-              <div className="slot-header-row">
-                <div className="slot-header">테마</div>
-                <div className="slot-header">조건</div>
+          <div className={styles.slotMachineContainer}>
+            <div className={styles.slotMachineFrame}>
+              <div className={styles.slotHeaderRow}>
+                <div className={styles.slotHeader}>테마</div>
+                <div className={styles.slotHeader}>조건</div>
               </div>
-              <div className="slot-viewing-area">
+              <div className={styles.slotViewingArea}>
                 {/* 테마 열 */}
-                <div className="slot-column">
+                <div className={styles.slotColumn}>
                   <div 
-                    className="slot-items"
+                    className={styles.slotItems}
                     ref={themeSlotRef}
                     style={{ 
                       transform: `translateY(-${themePosition * 60}px)`,
@@ -204,7 +204,7 @@ const ThemeRandom = () => {
                     {themes.map((theme, index) => (
                       <div 
                         key={theme.no} 
-                        className={`slot-item ${selectedTheme && selectedTheme.no === theme.no ? 'selected' : ''}`}
+                        className={`${styles.slotItem} ${selectedTheme && selectedTheme.no === theme.no ? styles.selected : ''}`}
                       >
                         {theme.name}
                       </div>
@@ -213,9 +213,9 @@ const ThemeRandom = () => {
                 </div>
                 
                 {/* 제약 열 */}
-                <div className="slot-column">
+                <div className={styles.slotColumn}>
                   <div 
-                    className="slot-items"
+                    className={styles.slotItems}
                     ref={constraintSlotRef}
                     style={{ 
                       transform: `translateY(-${constraintPosition * 60}px)`,
@@ -225,7 +225,7 @@ const ThemeRandom = () => {
                     {constraints.map((constraint, index) => (
                       <div 
                         key={constraint.no} 
-                        className={`slot-item ${selectedConstraint && selectedConstraint.no === constraint.no ? 'selected' : ''}`}
+                        className={`${styles.slotItem} ${selectedConstraint && selectedConstraint.no === constraint.no ? styles.selected : ''}`}
                       >
                         {constraint.name}
                       </div>
@@ -234,27 +234,24 @@ const ThemeRandom = () => {
                 </div>
                 
                 {/* 선택 하이라이트 */}
-                <div className="slot-highlight-row"></div>
+                <div className={styles.slotHighlightRow}></div>
               </div>
               
               {/* 슬롯머신 레버 또는 버튼 */}
               <button
-                className="slot-lever"
+                className={styles.slotLever}
                 onClick={startSpin}
                 disabled={spinning}
               >
                 {spinning ? '회전 중...' : '레버 당기기'}
               </button>
-            </div>
-          </div>
-          
-          {/* 결과 컨테이너 - 항상 표시되도록 변경 */}
-          <div className="result-container">
+                        {/* 결과 컨테이너 - 항상 표시되도록 변경 */}
+          <div className={styles.resultContainer}>
             <h2>🎉 선택된 테마와 제약 🎉</h2>
             
             {/* 결과 요약 - opacity로 단계적 표시 */}
             <div 
-              className="result-summary"
+              className={styles.resultSummary}
               style={{ 
                 opacity: summaryOpacity, 
                 transition: 'opacity 0.2s ease',
@@ -268,7 +265,7 @@ const ThemeRandom = () => {
             
             {/* 버튼 영역 - opacity로 단계적 표시 */}
             <div 
-              className="result-buttons"
+              className={styles.resultButtons}
               style={{ 
                 opacity: buttonsOpacity, 
                 transition: 'opacity 0.2s ease',
@@ -276,7 +273,7 @@ const ThemeRandom = () => {
               }}
             >
               <button
-                className="accept-button"
+                className={styles.acceptButton}
                 onClick={handleAccept}
                 disabled={buttonsOpacity < 1} // 완전히 표시되기 전까지 비활성화
               >
@@ -284,6 +281,10 @@ const ThemeRandom = () => {
               </button>
             </div>
           </div>
+            </div>
+            
+          </div>
+          
         </>
       )}
     </div>

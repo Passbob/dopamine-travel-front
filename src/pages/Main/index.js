@@ -131,7 +131,7 @@ const Main = () => {
             animate="visible"
             whileHover="hover"
           >
-            <Link to="/random-with-options" className="travel-option random-with-options">
+            <Link to="/random-with-options" className="travel-option random-with-options" style={{ display: 'none' }}>
               <div className="image-container">
                 <img src={mapImage} alt="지도" className="option-image" />
               </div>

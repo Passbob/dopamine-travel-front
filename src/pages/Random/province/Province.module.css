@@ -1,4 +1,4 @@
-.map-page {
+.mapPage {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,17 +9,17 @@
   color: white;
 }
 
-.map-container {
+.mapContainer {
   position: relative;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
 }
 
-.korea-map-wrapper {
+.koreaMapWrapper {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 80vh;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
   overflow: hidden;
@@ -28,7 +28,7 @@
   justify-content: center;
 }
 
-.korea-map {
+.koreaMap {
   max-width: 100%;
   max-height: 90%;
   object-fit: contain;
@@ -48,7 +48,7 @@
 }
 
 /* 검색 상태 표시 */
-.search-status {
+.searchStatus {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -57,7 +57,7 @@
   text-align: center;
 }
 
-.progress-bar {
+.progressBar {
   width: 100%;
   height: 10px;
   background-color: rgba(255, 255, 255, 0.2);
@@ -66,7 +66,7 @@
   margin-bottom: 10px;
 }
 
-.progress-fill {
+.progressFill {
   height: 100%;
   background-color: #09A6FF;
   border-radius: 5px;
@@ -74,7 +74,7 @@
 }
 
 /* 시작 버튼 */
-.start-search-button {
+.startSearchButton {
   position: absolute;
   bottom: 30px;
   left: 50%;
@@ -92,7 +92,7 @@
 }
 
 /* 결과 컨테이너 */
-.result-container {
+.resultContainer {
   position: absolute;
   background-color: rgba(9, 166, 255, 0.2);
   padding: 20px;
@@ -102,34 +102,23 @@
   width: 90%;
 }
 
-.result-container h2 {
+.resultContainer h2 {
   margin-bottom: 20px;
   font-size: 24px;
   color: #fff;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.button-group {
+.buttonGroup {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-.accept-button {
+.acceptButton {
   padding: 12px 24px;
   font-size: 16px;
   background-color: #09A6FF;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.back-button {
-  padding: 12px 24px;
-  font-size: 16px;
-  background-color: #666;
   color: white;
   border: none;
   border-radius: 30px;
@@ -142,20 +131,20 @@
   margin-top: 30px;
 }
 
-.home-link {
+.homeLink {
   color: #09A6FF;
   text-decoration: none;
   font-size: 16px;
   transition: color 0.3s;
 }
 
-.home-link:hover {
+.homeLink:hover {
   color: #FF9D0A;
   text-decoration: underline;
 }
 
 /* 로딩 컨테이너 */
-.loading-container {
+.loadingContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -170,48 +159,4 @@
   border-top-color: #09A6FF;
   border-radius: 50%;
   margin-bottom: 20px;
-}
-
-/* 화면 크기에 따른 반응형 조정 */
-@media (max-width: 1500px) {
-  .wheel-container {
-    width: 600px;
-    height: 600px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .wheel-container {
-    width: 550px;
-    height: 550px;
-  }
-}
-
-@media (max-width: 768px) {
-  .wheel-container {
-    width: 90vw;
-    height: 90vw;
-    max-width: 450px;
-    max-height: 450px;
-  }
-  
-  .touch-button {
-    width: 150px;
-    height: 150px;
-    font-size: 2rem;
-  }
-  
-  .roulette-pointer {
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-top: 60px solid #FF4545;
-  }
-  
-  .result-container {
-    padding: 2rem;
-  }
-  
-  .result-container h2 {
-    font-size: 1.7rem;
-  }
 } 

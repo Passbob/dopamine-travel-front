@@ -1,0 +1,252 @@
+/* 컨테이너 스타일 */
+.themeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5vh auto;
+  max-width: 1200px;
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+/* 슬롯머신 스타일 */
+.slotMachineContainer {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 10px;
+  perspective: 1000px;
+}
+
+.slotMachineFrame {
+  background-color: #c62828;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  min-height: 400px;
+}
+
+.slotHeaderRow {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.slotHeader {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 5px 5px 0 0;
+  font-weight: bold;
+  text-align: center;
+  width: 45%;
+}
+
+.slotViewingArea {
+  background-color: white;
+  border: 8px solid #f9a825;
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+.slotColumn {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+
+.slotColumn:first-child {
+  border-right: 3px solid #f9a825;
+}
+
+.slotItems {
+  position: absolute;
+  width: 100%;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.slotItem {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  padding: 0 10px;
+  text-align: center;
+  border-bottom: 1px dashed #ddd;
+  background-color: white;
+  color: #333;
+  font-weight: bold;
+  user-select: none;
+}
+
+.slotItem.selected {
+  color: #c62828;
+  background-color: #fff9c4;
+}
+
+.slotHighlightRow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 60px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background-color: rgba(249, 168, 37, 0.1);
+  border-top: 2px dashed #f9a825;
+  border-bottom: 2px dashed #f9a825;
+}
+
+.slotLever {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 120px;
+  background-color: #f9a825;
+  border-radius: 10px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.slotLever:hover {
+  transform: translateY(-50%) scale(1.05);
+  background-color: #ff8f00;
+}
+
+.slotLever:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+/* 결과 컨테이너 */
+.resultContainer {
+  margin-top: 10px;
+  width: 100%;
+  padding: 25px;
+  background-color: #09A6FF;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 1000;
+}
+
+.resultSummary {
+  margin: 20px 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: black;
+}
+
+.resultButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.acceptButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.acceptButton:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* 로딩 애니메이션 */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #ff6b6b;
+  animation: spin 1s ease-in-out infinite;
+  margin: 20px 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 에러 메시지 */
+.errorMessage {
+  margin: 40px auto;
+  text-align: center;
+  color: #ff5252;
+}
+
+/* 모바일 반응형 스타일 */
+@media (max-width: 768px) {
+  .slotHeaderRow {
+    display: none;
+  }
+
+  .slotMachineFrame {
+    padding: 15px;
+  }
+  
+  .slotLever {
+    position: static;
+    width: 100%;
+    height: 40px;
+    margin-top: 15px;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+  
+  .slotLever:hover {
+    transform: scale(1.02);
+  }
+
+  .resultContainer h2 {
+    font-size: 1rem;
+  }
+  
+  .resultSummary {
+    font-size: 0.8rem;
+  }
+  
+  .resultButtons {
+    margin-top: 10px;
+  }
+  
+  .acceptButton {
+    padding: 5px 8px;
+  }
+
+  .slotItem {
+    font-size: 0.8rem;
+  }
+} 

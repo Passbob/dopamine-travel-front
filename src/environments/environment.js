@@ -39,5 +39,6 @@ export default {
     prototypeProvinces: '/api/prototype/provinces',
     prototypeThemes: '/api/prototype/themes',
     prototypeConstraints: '/api/prototype/constraints',
+    prototypeTravelCourse: '/api/prototype/travel-course',
   }
 }; 

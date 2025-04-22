@@ -1,0 +1,208 @@
+.randomContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  max-width: 1800px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #000000;
+}
+
+.rouletteContainer {
+  position: relative;
+  width: 80vh;
+  height: 80vh;
+  margin: 30px auto;
+}
+
+.rouletteWheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border: 5px solid #ff5252;
+}
+
+.rouletteItem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  transform-origin: left center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+  z-index: 5;
+}
+
+.rouletteItem:nth-child(odd) {
+  background-color: #ff6b6b;
+  box-shadow: 0 0 3px rgba(255, 107, 107, 0.8);
+}
+
+.rouletteItem:nth-child(even) {
+  background-color: #4CAF50;
+  box-shadow: 0 0 3px rgba(76, 175, 80, 0.8);
+}
+
+.rouletteItem span {
+  position: absolute;
+  margin-top: -40px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 6;
+}
+
+.rouletteMarker {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #ff5252;
+  z-index: 10;
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.spinButtonCustom {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 5px solid #ff6b6b;
+  color: #ff6b6b;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+}
+
+.spinButtonCustom:hover {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.spinButtonCustom:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.resultContainer {
+  padding: 20px;
+  background-color: #09A6FF;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  z-index: 2000;
+  position: relative;
+  pointer-events: all;
+}
+
+.resultButtons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  z-index: 2100;
+  position: relative;
+}
+
+.acceptButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2200;
+  position: relative;
+  pointer-events: all;
+}
+
+.acceptButton:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #ff6b6b;
+  animation: spin 1s ease-in-out infinite;
+  margin: 20px 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorMessage {
+  margin: 40px auto;
+  text-align: center;
+  color: #ff5252;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .rouletteContainer {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .rouletteItem span {
+    font-size: 0.7rem;
+    margin-top: -25px;
+    max-width: 70px;
+  }
+  
+  .spinButtonCustom {
+    width: 80px;
+    height: 80px;
+    font-size: 0.9rem;
+  }
+} 

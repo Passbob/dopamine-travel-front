@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { getAllProvinces } from '../../../api/Random/getAllProvinceAPI';
 import koreaMap from '../../../assets/korea-map.png'; // 한국 지도 이미지 경로 수정 필요
-import './styles.css';
+import styles from './Province.module.css';
 
 // framer-motion 주요 속성 설명
 // initial: 애니메이션 시작 전 초기 상태 (opacity, scale, position 등)
@@ -27,21 +27,54 @@ const ProvinceSpotlight = () => {
   const [searchProgress, setSearchProgress] = useState(0);
   const spotlightControls = useAnimation();
   const mapRef = useRef(null);
+  const [mapDimensions, setMapDimensions] = useState({ width: 600, height: 600 });
   const navigate = useNavigate();
 
-  // 각 도/광역시별 대략적인 좌표 (지도 이미지에 맞게 조정 필요)
-  const provinceCoordinates = {
-    1: { x: -40, y: -120 },  // 경기도
-    2: { x: 50, y: -140 },  // 강원도
-    3: { x: -20, y: -40 },  // 충청북도
-    4: { x: -100, y: -20 },  // 충청남도
-    5: { x: -80, y: 40 },  // 전라북도
-    6: { x: -90, y: 140 },  // 전라남도
-    7: { x: 100, y: -10 },  // 경상북도
-    8: { x: 30, y: 100 },  // 경상남도
-    9: { x: -70, y: -148 }, // 서울특별시
-    10: { x: -80, y: 200 },  // 제주특별자치도
+  // 각 도/광역시별 상대적 좌표 (퍼센트 기준)
+  const provinceRelativeCoordinates = {
+    1: { x: -6.7, y: -21.5 },   // 경기도 (중앙에서 약간 왼쪽, 위쪽)
+    2: { x: 9.3, y: -26.3 },  // 강원도 (중앙에서 약간 오른쪽, 더 위쪽)
+    3: { x: -3.3, y: -6.7 },  // 충청북도 (중앙에서 약간 왼쪽)
+    4: { x: -16.7, y: -3.3 }, // 충청남도 (왼쪽, 중앙 약간 위)
+    5: { x: -13.3, y: 6.7 },  // 전라북도 (왼쪽, 중앙 약간 아래)
+    6: { x: -15, y: 23.3 },   // 전라남도 (왼쪽, 아래)
+    7: { x: 16.7, y: -1.7 },  // 경상북도 (오른쪽, 중앙)
+    8: { x: 5, y: 16.7 },     // 경상남도 (약간 오른쪽, 아래)
+    9: { x: -12.7, y: -27.5 },// 서울특별시 (왼쪽, 위)
+    10: { x: -14.3, y: 44.3 } // 제주특별자치도 (왼쪽, 맨 아래)
   };
+
+  // 상대적 좌표를 실제 픽셀 값으로 변환하는 함수
+  const getProvinceCoordinates = (provinceNo) => {
+    const relCoords = provinceRelativeCoordinates[provinceNo];
+    if (!relCoords) return { x: 0, y: 0 };
+
+    // 지도 컨테이너의 중심을 기준으로 상대 좌표 계산
+    return {
+      x: (relCoords.x / 100) * mapDimensions.width,
+      y: (relCoords.y / 100) * mapDimensions.height
+    };
+  };
+
+  // 지도 크기 업데이트 함수
+  const updateMapDimensions = () => {
+    if (mapRef.current) {
+      const { width, height } = mapRef.current.getBoundingClientRect();
+      setMapDimensions({ width, height });
+    }
+  };
+
+  // 컴포넌트 마운트 시 및 창 크기 변경 시 지도 크기 업데이트
+  useEffect(() => {
+    updateMapDimensions();
+    
+    const handleResize = () => {
+      updateMapDimensions();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -63,21 +96,20 @@ const ProvinceSpotlight = () => {
     if (!isSearching && !selectedProvince && provinces.length > 0) {
       setIsSearching(true);
       
-      // 스포트라이트 애니메이션 실제 시간 계산 (ms)
-      const steps = 10; // 몇 개의 랜덤 위치를 방문할지
+      // 애니메이션 실제 시간 계산 (ms)
+      const steps = 10; // 방문할 랜덤 위치 수
       let totalSpotlightTime = 0;
       
-      // 각 단계별 시간 계산 (점점 빨라지는 효과 고려)
+      // 각 단계별 시간 계산
       for (let i = 0; i < steps; i++) {
         totalSpotlightTime += (0.5 - (i * 0.04)) * 1000;
       }
       
       // 마지막 단계 시간 추가
-      totalSpotlightTime += 800; // 마지막 단계 0.8초
+      totalSpotlightTime += 800;
       
-      console.log('총 애니메이션 예상 시간:', totalSpotlightTime, 'ms');
-      
-      const updateFrequency = 200; // 200ms마다 업데이트
+      // 진행률 업데이트 빈도
+      const updateFrequency = 200;
       const incrementAmount = 100 / (totalSpotlightTime / updateFrequency);
       
       // 진행률 애니메이션
@@ -90,10 +122,10 @@ const ProvinceSpotlight = () => {
         }
       }, updateFrequency);
 
-      // 스포트라이트가 여러 지역을 돌아다니는 애니메이션
+      // 여러 지역을 방문하는 애니메이션
       for (let i = 0; i < steps; i++) {
         const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];
-        const coords = provinceCoordinates[randomProvince.no] || { x: 0, y: 0 };
+        const coords = getProvinceCoordinates(randomProvince.no);
         
         await spotlightControls.start({
           x: coords.x,
@@ -108,9 +140,9 @@ const ProvinceSpotlight = () => {
       // 최종 선택된 지역
       const selectedIndex = Math.floor(Math.random() * provinces.length);
       const finalProvince = provinces[selectedIndex];
-      const finalCoords = provinceCoordinates[finalProvince.no] || { x: 200, y: 200 };
+      const finalCoords = getProvinceCoordinates(finalProvince.no);
       
-      // 마지막 위치로 이동하고 좀 더 밝게
+      // 마지막 위치로 이동
       await spotlightControls.start({
         x: finalCoords.x,
         y: finalCoords.y,
@@ -125,7 +157,7 @@ const ProvinceSpotlight = () => {
       setSelectedProvince(finalProvince);
       setIsSearching(false);
       
-      // 애니메이션 종료 시 진행 바 100%로 설정 (아직 끝나지 않았을 경우)
+      // 진행 바 완료
       setSearchProgress(100);
       clearInterval(progressInterval);
     }
@@ -135,7 +167,7 @@ const ProvinceSpotlight = () => {
     if (selectedProvince) {
       navigate(`/random/city`, { 
         state: { 
-          province: selectedProvince  // 전체 province 객체를 state로 전달
+          province: selectedProvince
         }
       });
     }
@@ -143,10 +175,10 @@ const ProvinceSpotlight = () => {
 
   if (loading) {
     return (
-      <div className="map-page">
-        <div className="loading-container">
+      <div className={styles.mapPage}>
+        <div className={styles.loadingContainer}>
           <motion.div
-            className="spinner"
+            className={styles.spinner}
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
@@ -157,25 +189,25 @@ const ProvinceSpotlight = () => {
   }
 
   return (
-    <div className="map-page">
-      <div className="map-container" ref={mapRef}>
+    <div className={styles.mapPage}>
+      <div className={styles.mapContainer}>
         {/* 한국 지도 */}
-        <div className="korea-map-wrapper">
-          <img src={koreaMap} alt="대한민국 지도" className="korea-map" />
+        <div className={styles.koreaMapWrapper} ref={mapRef}>
+          <img src={koreaMap} alt="대한민국 지도" className={styles.koreaMap} />
           
           {/* 스포트라이트 효과 */}
           <motion.div 
-            className="spotlight"
+            className={styles.spotlight}
             initial={{ x: 0, y: 0, boxShadow: "0 0 60px 30px rgba(255, 255, 255, 0.6)" }}
             animate={spotlightControls}
           />
           
           {/* 지역 검색 중 상태 표시 */}
           {isSearching && (
-            <div className="search-status">
-              <div className="progress-bar">
+            <div className={styles.searchStatus}>
+              <div className={styles.progressBar}>
                 <div 
-                  className="progress-fill"
+                  className={styles.progressFill}
                   style={{ width: `${searchProgress}%` }}
                 ></div>
               </div>
@@ -186,7 +218,7 @@ const ProvinceSpotlight = () => {
           {/* 시작 버튼 */}
           {!isSearching && !selectedProvince && (
             <motion.button
-              className="start-search-button"
+              className={styles.startSearchButton}
               onClick={startSpotlightAnimation}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -214,16 +246,16 @@ const ProvinceSpotlight = () => {
       <AnimatePresence>
         {selectedProvince && (
           <motion.div 
-            className="result-container"
+            className={styles.resultContainer}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
             <h2>🎉 선택된 지역: {selectedProvince.name} 🎉</h2>
-            <div className="button-group">
+            <div className={styles.buttonGroup}>
               <motion.button 
-                className="accept-button"
+                className={styles.acceptButton}
                 onClick={handleCitySelection}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -235,8 +267,8 @@ const ProvinceSpotlight = () => {
         )}
       </AnimatePresence>
 
-      <div className="navigation">
-        <Link to="/" className="home-link">홈으로 돌아가기</Link>
+      <div className={styles.navigation}>
+        <Link to="/" className={styles.homeLink}>홈으로 돌아가기</Link>
       </div>
     </div>
   );
