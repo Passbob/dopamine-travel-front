@@ -22,6 +22,10 @@ const ThemeRandom = () => {
   // location.state에서 province와 city 정보 가져오기
   const { province, city } = location.state || {};
 
+  // 결과 요소들의 opacity를 위한 state 추가
+  const [summaryOpacity, setSummaryOpacity] = useState(0);
+  const [buttonsOpacity, setButtonsOpacity] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,41 +63,54 @@ const ThemeRandom = () => {
     setSelectedTheme(null);
     setSelectedConstraint(null);
     
-    // 각 슬롯이 돌아갈 횟수 (테마와 제약 슬롯이 다른 속도로 돌아가도록 설정)
-    const themeSpins = 30 + Math.floor(Math.random() * 15);  // 30-45번 회전
-    const constraintSpins = 25 + Math.floor(Math.random() * 15);  // 25-40번 회전
-    
     // 선택될 인덱스 랜덤 결정
     const selectedThemeIndex = Math.floor(Math.random() * themes.length);
     const selectedConstraintIndex = Math.floor(Math.random() * constraints.length);
     
-    // 애니메이션
-    let themeCount = 0;
-    let constraintCount = 0;
+    // 초기에는 빠르게 돌다가 점점 느려지도록 시간 간격 설정
+    // 더 많은 단계를 추가하여 총 회전 수 증가
+    const intervals = [
+      50, 50, 50, 50, 50, 50, 50, 50, 50, 50,  // 초반 10단계는 빠르게 (50ms)
+      100, 100, 100, 100, 100,                // 중간 5단계는 보통 속도 (100ms)
+      150, 150, 150,                          // 중간 후반 3단계 (150ms)
+      200, 200, 250, 300, 350, 400            // 마지막 단계들은 점점 느리게
+    ];
+    let currentInterval = 0;
     
-    const slotInterval = setInterval(() => {
-      // 테마 슬롯 회전
-      if (themeCount < themeSpins) {
-        setThemePosition(prevPos => (prevPos + 1) % themes.length);
-        themeCount++;
-      }
+    // 슬롯 위치 변수 - 20바퀴 이상 돌도록 시작 위치 설정
+    // 긴 회전을 위해 처음 위치를 랜덤하게 설정
+    let themePos = Math.floor(Math.random() * themes.length);
+    let constraintPos = Math.floor(Math.random() * constraints.length);
+    
+    const spin = () => {
+      // 테마 위치 업데이트
+      themePos = (themePos + 1) % themes.length;
+      setThemePosition(themePos);
       
-      // 제약 슬롯 회전
-      if (constraintCount < constraintSpins) {
-        setConstraintPosition(prevPos => (prevPos + 1) % constraints.length);
-        constraintCount++;
-      }
+      // 제약 위치 업데이트
+      constraintPos = (constraintPos + 1) % constraints.length;
+      setConstraintPosition(constraintPos);
       
-      // 모든 슬롯 회전이 끝나면 결과 표시
-      if (themeCount >= themeSpins && constraintCount >= constraintSpins) {
-        clearInterval(slotInterval);
-        setThemePosition(selectedThemeIndex);
-        setConstraintPosition(selectedConstraintIndex);
-        setSelectedTheme(themes[selectedThemeIndex]);
-        setSelectedConstraint(constraints[selectedConstraintIndex]);
-        setSpinning(false);
+      // 다음 단계로 진행
+      currentInterval++;
+      
+      // 더 많은 단계가 있으면 계속 진행
+      if (currentInterval < intervals.length) {
+        setTimeout(spin, intervals[currentInterval]);
+      } else {
+        // 모든 단계가 끝나면 최종 선택 위치로 설정
+        setTimeout(() => {
+          setThemePosition(selectedThemeIndex);
+          setConstraintPosition(selectedConstraintIndex);
+          setSelectedTheme(themes[selectedThemeIndex]);
+          setSelectedConstraint(constraints[selectedConstraintIndex]);
+          setSpinning(false);
+        }, 500);
       }
-    }, 100); // 0.1초마다 회전
+    };
+    
+    // 첫 번째 단계 시작
+    setTimeout(spin, intervals[0]);
   };
 
   const handleAccept = () => {
@@ -109,10 +126,46 @@ const ThemeRandom = () => {
     }
   };
 
+  // 결과가 선택되면 단계적으로 요소들을 표시
+  useEffect(() => {
+    // 슬롯 회전이 끝나고 결과가 선택되었을 때만 실행
+    if (selectedTheme && selectedConstraint && !spinning) {
+      // 모든 opacity 초기화
+      setSummaryOpacity(0);
+      setButtonsOpacity(0);
+      
+      // 결과 요약 텍스트 표시 (0.5초 후 시작)
+      setTimeout(() => {
+        let summaryValue = 0;
+        const summaryInterval = setInterval(() => {
+          summaryValue += 0.2;
+          setSummaryOpacity(Math.min(summaryValue, 1));
+          
+          if (summaryValue >= 1) {
+            clearInterval(summaryInterval);
+            
+            // 요약 텍스트 완전히 표시 후 0.3초 후에 버튼 표시 시작
+            setTimeout(() => {
+              let buttonsValue = 0;
+              const buttonsInterval = setInterval(() => {
+                buttonsValue += 0.2;
+                setButtonsOpacity(Math.min(buttonsValue, 1));
+                
+                if (buttonsValue >= 1) {
+                  clearInterval(buttonsInterval);
+                }
+              }, 200); // 0.2초마다 0.2씩 증가
+            }, 300);
+          }
+        }, 200); // 0.2초마다 0.2씩 증가
+      }, 500);
+    }
+  }, [selectedTheme, selectedConstraint, spinning]);
+
   if (isLoading) {
     return (
       <div className="theme-container">
-        <h1>{province?.name} {city?.name} 테마 랜덤 선택</h1>
+        <h1>{province?.name} {city?.name}</h1>
         <div className="loading">
           <p>테마 정보를 불러오는 중...</p>
           <div className="spinner"></div>
@@ -123,7 +176,7 @@ const ThemeRandom = () => {
 
   return (
     <div className="theme-container">
-      <h1>{province?.name} {city?.name} 테마 랜덤 선택</h1>
+      <h1>{province?.name} {city?.name}</h1>
       
       {(themes.length === 0 || constraints.length === 0) ? (
         <div className="error-message">
@@ -131,102 +184,106 @@ const ThemeRandom = () => {
         </div>
       ) : (
         <>
-          <div className="slots-container">
-            <div className="slot-machine">
-              <div className="slot-header">테마</div>
-              <div className="slot-window">
-                <div 
-                  className="slot-items"
-                  ref={themeSlotRef}
-                  style={{ 
-                    transform: `translateY(-${themePosition * 60}px)`,
-                    transition: spinning ? 'transform 0.1s ease' : 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
-                  }}
-                >
-                  {themes.map((theme, index) => (
-                    <div 
-                      key={theme.no} 
-                      className={`slot-item ${selectedTheme && selectedTheme.no === theme.no ? 'selected' : ''}`}
-                    >
-                      {theme.name}
-                    </div>
-                  ))}
-                </div>
-                <div className="slot-highlight"></div>
+          <div className="slot-machine-container">
+            <div className="slot-machine-frame">
+              <div className="slot-header-row">
+                <div className="slot-header">테마</div>
+                <div className="slot-header">조건</div>
               </div>
-            </div>
-            
-            <div className="slot-machine">
-              <div className="slot-header">제약</div>
-              <div className="slot-window">
-                <div 
-                  className="slot-items"
-                  ref={constraintSlotRef}
-                  style={{ 
-                    transform: `translateY(-${constraintPosition * 60}px)`,
-                    transition: spinning ? 'transform 0.1s ease' : 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
-                  }}
-                >
-                  {constraints.map((constraint, index) => (
-                    <div 
-                      key={constraint.no} 
-                      className={`slot-item ${selectedConstraint && selectedConstraint.no === constraint.no ? 'selected' : ''}`}
-                    >
-                      {constraint.name}
-                    </div>
-                  ))}
+              <div className="slot-viewing-area">
+                {/* 테마 열 */}
+                <div className="slot-column">
+                  <div 
+                    className="slot-items"
+                    ref={themeSlotRef}
+                    style={{ 
+                      transform: `translateY(-${themePosition * 60}px)`,
+                      transition: `transform ${spinning ? 0.2 : 0.5}s ease-out`
+                    }}
+                  >
+                    {themes.map((theme, index) => (
+                      <div 
+                        key={theme.no} 
+                        className={`slot-item ${selectedTheme && selectedTheme.no === theme.no ? 'selected' : ''}`}
+                      >
+                        {theme.name}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="slot-highlight"></div>
+                
+                {/* 제약 열 */}
+                <div className="slot-column">
+                  <div 
+                    className="slot-items"
+                    ref={constraintSlotRef}
+                    style={{ 
+                      transform: `translateY(-${constraintPosition * 60}px)`,
+                      transition: `transform ${spinning ? 0.2 : 0.5}s ease-out`
+                    }}
+                  >
+                    {constraints.map((constraint, index) => (
+                      <div 
+                        key={constraint.no} 
+                        className={`slot-item ${selectedConstraint && selectedConstraint.no === constraint.no ? 'selected' : ''}`}
+                      >
+                        {constraint.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* 선택 하이라이트 */}
+                <div className="slot-highlight-row"></div>
               </div>
+              
+              {/* 슬롯머신 레버 또는 버튼 */}
+              <button
+                className="slot-lever"
+                onClick={startSpin}
+                disabled={spinning}
+              >
+                {spinning ? '회전 중...' : '레버 당기기'}
+              </button>
             </div>
           </div>
           
-          <button
-            className="spin-button"
-            onClick={startSpin}
-            disabled={spinning}
-          >
-            {spinning ? '랜덤 선택 중...' : '랜덤 선택하기'}
-          </button>
-
-          <AnimatePresence>
-            {selectedTheme && selectedConstraint && !spinning && (
-              <motion.div
-                className="result-container"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
+          {/* 결과 컨테이너 - 항상 표시되도록 변경 */}
+          <div className="result-container">
+            <h2>🎉 선택된 테마와 제약 🎉</h2>
+            
+            {/* 결과 요약 - opacity로 단계적 표시 */}
+            <div 
+              className="result-summary"
+              style={{ 
+                opacity: summaryOpacity, 
+                transition: 'opacity 0.2s ease',
+                visibility: summaryOpacity > 0 ? 'visible' : 'hidden'
+              }}
+            >
+              {selectedTheme && selectedConstraint && (
+                <p>{province?.name} {city?.name}에서 <strong>{selectedTheme.name}</strong> 테마로 <strong>{selectedConstraint.name}</strong> 제약 조건으로 여행을 즐겨보세요!</p>
+              )}
+            </div>
+            
+            {/* 버튼 영역 - opacity로 단계적 표시 */}
+            <div 
+              className="result-buttons"
+              style={{ 
+                opacity: buttonsOpacity, 
+                transition: 'opacity 0.2s ease',
+                visibility: buttonsOpacity > 0 ? 'visible' : 'hidden'
+              }}
+            >
+              <button
+                className="accept-button"
+                onClick={handleAccept}
+                disabled={buttonsOpacity < 1} // 완전히 표시되기 전까지 비활성화
               >
-                <h2>🎉 선택된 테마와 제약 🎉</h2>
-                <div className="result-details">
-                  <div className="result-item">
-                    <strong>테마:</strong> {selectedTheme.name}
-                  </div>
-                  <div className="result-item">
-                    <strong>제약:</strong> {selectedConstraint.name}
-                  </div>
-                </div>
-                <div className="result-summary">
-                  <p>{province?.name} {city?.name}에서 <strong>{selectedTheme.name}</strong> 테마로 <strong>{selectedConstraint.name}</strong> 제약 조건으로 여행을 즐겨보세요!</p>
-                </div>
-                <div className="result-buttons">
-                  <button
-                    className="accept-button"
-                    onClick={handleAccept}
-                  >
-                    결과 확인하기
-                  </button>
-                  <button
-                    className="regenerate-button"
-                    onClick={startSpin}
-                  >
-                    다시 선택하기
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                결과 확인하기
+              </button>
+            </div>
+          </div>
         </>
       )}
     </div>

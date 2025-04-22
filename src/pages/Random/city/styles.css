@@ -190,11 +190,19 @@
   z-index: 10;
 }
 
-.spin-button {
+.button-container {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.spin-button-custom {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -205,14 +213,15 @@
   cursor: pointer;
   z-index: 5;
   transition: all 0.3s ease;
+  pointer-events: auto;
 }
 
-.spin-button:hover {
+.spin-button-custom:hover {
   background-color: #ff6b6b;
   color: white;
 }
 
-.spin-button:disabled {
+.spin-button-custom:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }

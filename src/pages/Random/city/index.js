@@ -134,7 +134,7 @@ const Random = () => {
               animate={{ rotate: rotationDegree }}
               transition={{
                 duration: 5,
-                ease: [0.2, 0.9, 0.3, 0.99], // 빠르게 시작하여 천천히 멈추는 효과
+                ease: [0.2, 0.9, 0.3, 0.99],
               }}
             >
               {cities.map((city, index) => (
@@ -147,14 +147,15 @@ const Random = () => {
                 </div>
               ))}
             </motion.div>
-            
-            <button
-              className="spin-button"
-              onClick={startSpin}
-              disabled={spinning}
-            >
-              {spinning ? '돌아가는 중...' : '룰렛 돌리기'}
-            </button>
+            <div className="button-container">
+              <button
+                className="spin-button-custom"
+                onClick={startSpin}
+                disabled={spinning}
+              >
+                {spinning ? '돌아가는 중...' : '룰렛 돌리기'}
+              </button>
+            </div>
           </div>
 
           <AnimatePresence>
