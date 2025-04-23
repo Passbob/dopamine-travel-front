@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/dopamine-travel-front/static/css/main.a53a62ca.css",
-    "main.js": "/dopamine-travel-front/static/js/main.a9632e1d.js",
+    "main.js": "/dopamine-travel-front/static/js/main.a60fbeaf.js",
     "static/media/map.png": "/dopamine-travel-front/static/media/map.6da470533d38b998c1e3.png",
     "static/media/dice.png": "/dopamine-travel-front/static/media/dice.011e3e827674629d1097.png",
     "static/media/korea-map.png": "/dopamine-travel-front/static/media/korea-map.651ddc3399654487fd67.png",
     "index.html": "/dopamine-travel-front/index.html",
     "main.a53a62ca.css.map": "/dopamine-travel-front/static/css/main.a53a62ca.css.map",
-    "main.a9632e1d.js.map": "/dopamine-travel-front/static/js/main.a9632e1d.js.map"
+    "main.a60fbeaf.js.map": "/dopamine-travel-front/static/js/main.a60fbeaf.js.map"
   },
   "entrypoints": [
     "static/css/main.a53a62ca.css",
-    "static/js/main.a9632e1d.js"
+    "static/js/main.a60fbeaf.js"
   ]
 }
