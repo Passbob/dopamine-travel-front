@@ -12,7 +12,6 @@ import PostResult from './pages/PostResult';
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/random" element={<ProvinceSpotlight />} />
@@ -21,7 +20,6 @@ function App() {
         <Route path="/course" element={<Course />} />
         <Route path="/postResult" element={<PostResult />} />
       </Routes>
-    </Router>
   );
 }
 
