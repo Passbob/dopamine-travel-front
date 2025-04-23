@@ -14,7 +14,7 @@ const apiBaseUrlFromEnv = process.env.REACT_APP_API_URL;
 const environment = {
   production: {
     // CI/CD 환경 변수가 있으면 사용, 없으면 기본값 사용
-    apiBaseUrl: apiBaseUrlFromEnv ? "https://corsproxy.io/?" + apiBaseUrlFromEnv : null,
+    apiBaseUrl: apiBaseUrlFromEnv,
     enableDebug: false,
   },
   development: {
