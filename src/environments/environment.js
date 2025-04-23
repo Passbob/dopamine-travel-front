@@ -6,17 +6,16 @@
 
 // 런타임 환경 감지
 const isProduction = process.env.NODE_ENV === 'production';
-const isStaging = process.env.REACT_APP_ENV === 'staging';
+
+// CI/CD에서 설정된 환경 변수 사용
+const apiBaseUrlFromEnv = process.env.REACT_APP_API_URL;
 
 // 환경별 설정
 const environment = {
   production: {
-    apiBaseUrl: 'https://api.도파민여행.com', // 실제 도메인으로 변경 필요
+    // CI/CD 환경 변수가 있으면 사용, 없으면 기본값 사용
+    apiBaseUrl: apiBaseUrlFromEnv || 'http://3.37.225.55:8080',
     enableDebug: false,
-  },
-  staging: {
-    apiBaseUrl: 'https://staging-api.도파민여행.com', // 스테이징 도메인으로 변경 필요
-    enableDebug: true,
   },
   development: {
     apiBaseUrl: 'http://localhost:8080',
@@ -25,7 +24,7 @@ const environment = {
 };
 
 // 현재 환경에 맞는 설정 선택
-const currentEnv = isProduction ? 'production' : (isStaging ? 'staging' : 'development');
+const currentEnv = isProduction ? 'production' : 'development';
 const config = environment[currentEnv];
 
 export default {
