@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/dopamine-front/static/css/main.a53a62ca.css",
+    "main.js": "/dopamine-front/static/js/main.faafde5f.js",
+    "static/media/map.png": "/dopamine-front/static/media/map.6da470533d38b998c1e3.png",
+    "static/media/dice.png": "/dopamine-front/static/media/dice.011e3e827674629d1097.png",
+    "static/media/korea-map.png": "/dopamine-front/static/media/korea-map.651ddc3399654487fd67.png",
+    "index.html": "/dopamine-front/index.html",
+    "main.a53a62ca.css.map": "/dopamine-front/static/css/main.a53a62ca.css.map",
+    "main.faafde5f.js.map": "/dopamine-front/static/js/main.faafde5f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a53a62ca.css",
+    "static/js/main.faafde5f.js"
+  ]
+}
