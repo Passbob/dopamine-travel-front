@@ -81,7 +81,7 @@ const Main = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          어디로 여행을 갈지 고민이신가요? AI추천 기반으로 여행지를 정해보세요
+          여행지 아직도 못 고르셨나요? AI추천 기반으로 랜덤 여행지를 정해보세요
         </motion.p>
         
         <motion.div 
