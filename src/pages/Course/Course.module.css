@@ -4,7 +4,7 @@
   padding: 20px;
   font-family: 'Noto Sans KR', sans-serif;
   min-height: 90vh;
-  background-color: #f9f9f9;
+  background-color: #000000;
 }
 
 .courseHeader {
@@ -15,19 +15,19 @@
 .courseHeader h1 {
   font-size: 2rem;
   margin-bottom: 10px;
-  color: #333;
+  color: #f9f9f9;
 }
 
 .courseHeader p {
   font-size: 1.2rem;
-  color: #666;
+  color: #f9f9f9;
 }
 
 .courseSelection h2 {
   font-size: 1.5rem;
   margin-bottom: 20px;
   text-align: center;
-  color: #555;
+  color: #f9f9f9;
 }
 
 .courseCards {
@@ -64,12 +64,12 @@
 .courseCard h3 {
   font-size: 1.3rem;
   margin-bottom: 10px;
-  color: #333;
+  color: #f9f9f9;
 }
 
 .courseDescription {
   font-size: 0.95rem;
-  color: #666;
+  color: #f9f9f9;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -178,7 +178,7 @@
 .cardDrawContainer h2 {
   font-size: 1.8rem;
   margin-bottom: 30px;
-  color: #444;
+  color: #f9f9f9;
 }
 
 .drawCardButton {
@@ -411,7 +411,7 @@
 .cardDrawContainer h2 {
   font-size: 1.8rem;
   margin-bottom: 30px;
-  color: #444;
+  color: #f9f9f9;
 }
 
 .drawCardButton {
@@ -437,15 +437,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 40px 0;
+  justify-content: center;
+  margin: 0 auto;
   text-align: center;
   width: 100%;
+  height: 100%;
 }
 
 .cardDeckContainer {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   margin-bottom: 20px;
   perspective: 1000px;
 }
@@ -454,8 +456,8 @@
   width: 180px;
   height: 280px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 25%;
+  left: 25%;
   transform: translate(-50%, -50%);
   border-radius: 15px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
