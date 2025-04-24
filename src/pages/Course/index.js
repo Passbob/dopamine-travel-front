@@ -25,7 +25,7 @@ const Course = () => {
         <h1>오류 발생</h1>
         <div style={{ color: 'black' }} className={styles.errorMessage}>
           <p>필요한 정보가 부족합니다. 테마 선택 페이지로 돌아가세요.</p>
-          <button onClick={() => navigate(-1)}>이전 페이지로 돌아가기</button>
+          <button onClick={() => navigate('/')}>홈으로 돌아가기</button>
         </div>
       </div>
     );
@@ -143,7 +143,7 @@ const Course = () => {
         <h1 style={{ color: 'red' }}>오류 발생</h1>
         <div style={{ color: 'black' }} className={styles.errorMessage}>
           <p>{error}</p>
-          <button onClick={() => navigate(-1)}>이전 페이지로 돌아가기</button>
+          <button onClick={handleGoHome}>홈으로 돌아가기</button>
         </div>
       </div>
     );
