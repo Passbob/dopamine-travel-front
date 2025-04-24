@@ -81,7 +81,7 @@ const Main = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          어디로 여행을 갈지 고민이신가요? 도파민 여행으로 여행지를 정해보세요
+          어디로 여행을 갈지 고민이신가요? AI추천 기반으로 여행지를 정해보세요
         </motion.p>
         
         <motion.div 
@@ -131,12 +131,20 @@ const Main = () => {
             animate="visible"
             whileHover="hover"
           >
-            <Link to="/random-with-options" className="travel-option random-with-options" style={{ display: 'none' }}>
-              <div className="image-container">
-                <img src={mapImage} alt="지도" className="option-image" />
-              </div>
-              <div className="option-title">도는 선택하고<br />랜덤 여행</div>
-            </Link>
+            <div className="travel-option-disabled-container">
+              <Link 
+                to="#" 
+                className="travel-option random-with-options disabled-option"
+                onClick={(e) => e.preventDefault()}
+              >
+                <div className="image-container">
+                  <img src={mapImage} alt="지도" className="option-image" />
+                </div>
+                <div className="option-title">도는 선택하고<br />랜덤 여행</div>
+              </Link>
+              <div className="disabled-line"></div>
+              <div className="coming-soon-badge">준비 중</div>
+            </div>
           </motion.div>
         </div>
       </div>

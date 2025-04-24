@@ -140,9 +140,9 @@ const Course = () => {
   if (error) {
     return (
       <div className={styles.courseContainer}>
-        <h1>오류 발생</h1>
+        <h1 style={{ color: 'red' }}>오류 발생</h1>
         <div className={styles.errorMessage}>
-          <p>{error}</p>
+          <p style={{ color: 'black' }}>{error}</p>
           <button onClick={() => navigate(-1)}>이전 페이지로 돌아가기</button>
         </div>
       </div>

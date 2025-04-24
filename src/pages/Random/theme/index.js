@@ -241,9 +241,9 @@ const ThemeRandom = () => {
               <button
                 className={styles.slotLever}
                 onClick={startSpin}
-                disabled={spinning}
+                disabled={spinning || selectedTheme !== null}
               >
-                {spinning ? '회전 중...' : '레버 당기기'}
+                {spinning ? '회전 중...' : (selectedTheme ? '레버 사용 완료' : '레버 당기기')}
               </button>
                         {/* 결과 컨테이너 - 항상 표시되도록 변경 */}
           <div className={styles.resultContainer}>
