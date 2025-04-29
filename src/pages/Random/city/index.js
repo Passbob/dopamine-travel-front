@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-do
 import { motion, AnimatePresence } from 'framer-motion';
 import { getCitiesByProvince } from '../../../api/Random/getAllCitiesAPI';
 import styles from './City.module.css';
+import SEO from '../../../components/SEO';
 
 const Random = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -125,6 +126,11 @@ const Random = () => {
   if (isLoading) {
     return (
       <div className={styles.randomContainer}>
+        <SEO 
+          title={`${provinceName} 도시 선택`}
+          description={`${provinceName}의 도시들 중에서 랜덤으로 여행지를 추천해드립니다. 어디로 갈지 고민될 때, 도파민 여행과 함께하세요.`}
+          keywords={`${provinceName}, 여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천`}
+        />
         <h1>{provinceName} 도시 랜덤 선택</h1>
         <div className={styles.loading}>
           <p>도시 정보를 불러오는 중...</p>
@@ -136,6 +142,11 @@ const Random = () => {
 
   return (
     <div className={styles.randomContainer}>
+      <SEO 
+        title={`${provinceName} 도시 선택`}
+        description={`${provinceName}의 도시들 중에서 랜덤으로 여행지를 추천해드립니다. 어디로 갈지 고민될 때, 도파민 여행과 함께하세요.`}
+        keywords={`${provinceName}, 여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천`}
+      />
       <h1>{provinceName} 도시 랜덤 선택</h1>
       
       {cities.length === 0 ? (
