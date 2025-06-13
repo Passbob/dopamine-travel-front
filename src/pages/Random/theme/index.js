@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getAllThemes } from '../../../api/Random/getAllThemeAPI';
 import { getAllConstraints } from '../../../api/Random/getAllConstraintAPI';
 import styles from './Theme.module.css';
+import SEO from '../../../components/SEO';
 
 const ThemeRandom = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -165,6 +166,11 @@ const ThemeRandom = () => {
   if (isLoading) {
     return (
       <div className={styles.themeContainer}>
+          <SEO
+            title={`${province?.name} ${city?.name} 테마 선택`}
+            description={`${province?.name} ${city?.name}에서 즐길 여행 테마를 선택하세요. 자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요.`}
+            keywords={`${province?.name} 여행, ${city?.name} 여행, 여행 테마, 자연 여행, 문화 여행, 맛집 투어, 액티비티, 테마 여행`}
+          />
         <h1>{province?.name} {city?.name}</h1>
         <div className={styles.loading}>
           <p>테마 정보를 불러오는 중...</p>
@@ -176,6 +182,11 @@ const ThemeRandom = () => {
 
   return (
     <div className={styles.themeContainer}>
+        <SEO
+          title={`${province?.name} ${city?.name} 테마 선택`}
+          description={`${province?.name} ${city?.name}에서 즐길 여행 테마를 선택하세요. 자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요.`}
+          keywords={`${province?.name} 여행, ${city?.name} 여행, 여행 테마, 자연 여행, 문화 여행, 맛집 투어, 액티비티, 테마 여행`}
+        />
       <h1>{province?.name} {city?.name}</h1>
       
       {(themes.length === 0 || constraints.length === 0) ? (

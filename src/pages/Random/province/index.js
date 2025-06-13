@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { getAllProvinces } from '../../../api/Random/getAllProvinceAPI';
 import koreaMap from '../../../assets/korea-map.png'; // 한국 지도 이미지 경로 수정 필요
 import styles from './Province.module.css';
+import SEO from '../../../components/SEO';
 
 // framer-motion 주요 속성 설명
 // initial: 애니메이션 시작 전 초기 상태 (opacity, scale, position 등)
@@ -176,6 +177,11 @@ const ProvinceSpotlight = () => {
   if (loading) {
     return (
       <div className={styles.mapPage}>
+          <SEO
+            title="도 선택"
+            description="여행하고 싶은 도를 선택하세요. 경기도, 강원도, 제주도 등 전국 여행지 중에서 랜덤으로 추천해드립니다."
+            keywords="도 선택, 여행지 선택, 경기도 여행, 강원도 여행, 제주도 여행, 랜덤 여행, 국내여행"
+          />
         <div className={styles.loadingContainer}>
           <motion.div
             className={styles.spinner}
@@ -190,6 +196,11 @@ const ProvinceSpotlight = () => {
 
   return (
     <div className={styles.mapPage}>
+        <SEO
+          title="도 선택"
+          description="여행하고 싶은 도를 선택하세요. 경기도, 강원도, 제주도 등 전국 여행지 중에서 랜덤으로 추천해드립니다."
+          keywords="도 선택, 여행지 선택, 경기도 여행, 강원도 여행, 제주도 여행, 랜덤 여행, 국내여행"
+        />
       <div className={styles.mapContainer}>
         {/* 한국 지도 */}
         <div className={styles.koreaMapWrapper} ref={mapRef}>

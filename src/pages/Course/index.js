@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Course.module.css';
 import environment from '../../environments/environment';
+// SEO 컴포넌트 가져오기
+import SEO from '../../components/SEO';
 
 const Course = () => {
   const location = useLocation();
@@ -151,6 +153,12 @@ const Course = () => {
 
   return (
     <div className={styles.courseContainer}>
+    <SEO
+      title="여행 코스 결과"
+      description={`${province?.name} ${city?.name} ${theme?.name} 테마 여행 코스입니다. AI가 추천하는 맞춤형 여행 계획을 확인하세요.`}
+      keywords={`${province?.name} 여행, ${city?.name} 여행, ${theme?.name}, 여행 코스, AI 추천, 여행 계획`}
+    />
+
       <div className={styles.courseHeader}>
         <h1>{province?.name} {city?.name} 여행 코스</h1>
         <p>테마: {theme?.name} / 제약: {constraint?.name}</p>
