@@ -155,8 +155,8 @@ const Course = () => {
     <div className={styles.courseContainer}>
     <SEO
       title="여행 코스 결과"
-      description={`${province?.name} ${city?.name} ${theme?.name} 테마 여행 코스입니다. AI가 추천하는 맞춤형 여행 계획을 확인하세요.`}
-      keywords={`${province?.name} 여행, ${city?.name} 여행, ${theme?.name}, 여행 코스, AI 추천, 여행 계획`}
+      description={`랜덤으로 추출 된 여행 코스입니다. AI가 추천하는 맞춤형 여행 계획을 확인하세요.`}
+      keywords={`랜덤 여행, 도파민 여행, 추천 여행, 여행 코스, AI 추천, 여행 계획`}
     />
 
       <div className={styles.courseHeader}>
