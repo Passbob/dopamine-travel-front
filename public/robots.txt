@@ -1,6 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+Disallow: /api/
 
-# 사이트맵 추가
-Sitemap: https://passbob.github.io/dopamine-travel-front/sitemap.xml
+# 사이트맵 위치 지정
+Sitemap: https://randomdopamine.shop/sitemap.xml
