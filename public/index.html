@@ -5,13 +5,50 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <!-- 기본적인 메타 정보만 유지, 나머지는 react-helmet-async로 관리 -->
+    
+    <!-- 기본 SEO 메타태그 -->
+    <meta name="description" content="선택 장애를 위한 랜덤 여행 코스 추천 서비스. 고민 없이 떠나는 즉흥 여행!" />
+    <meta name="keywords" content="랜덤여행, 여행추천, 선택장애, 여행코스, 즉흥여행, 도파민여행" />
+    <meta name="author" content="도파민 여행" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="도파민 여행 - 랜덤 여행 추천" />
+    <meta property="og:description" content="선택 장애를 위한 랜덤 여행 코스 추천 서비스" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://randomdopamine.shop" />
+    <meta property="og:site_name" content="도파민 여행" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:image" content="https://randomdopamine.shop/web-app-manifest-512x512.png" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="도파민 여행 - 랜덤 여행 추천" />
+    <meta name="twitter:description" content="선택 장애를 위한 랜덤 여행 코스 추천 서비스" />
+    <meta name="twitter:image" content="https://randomdopamine.shop/web-app-manifest-512x512.png" />
+    
+    <!-- 구조화된 데이터 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "도파민 여행",
+      "description": "선택 장애를 위한 랜덤 여행 코스 추천 서비스",
+      "url": "https://randomdopamine.shop",
+      "applicationCategory": "TravelApplication",
+      "operatingSystem": "Any"
+    }
+    </script>
+    
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>도파민 여행</title>
+    <title>도파민 여행 - 랜덤 여행 추천</title>
   </head>
   <body>
-    <noscript>이 앱을 사용하려면 JavaScript를 활성화해야 합니다.</noscript>
+    <noscript>
+      <h1>도파민 여행 - 랜덤 여행 추천</h1>
+      <p>선택 장애를 위한 랜덤 여행 코스 추천 서비스입니다.</p>
+      <p>JavaScript를 활성화해주세요.</p>
+    </noscript>
     <div id="root"></div>
   </body>
 </html>
