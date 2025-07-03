@@ -154,7 +154,7 @@ const Course = () => {
   return (
     <div className={styles.courseContainer}>
     <SEO
-      title="여행 코스 결과"
+      title="랜덤 여행지 추천 - 맞춤 코스 결과"
       description="랜덤으로 추출 된 여행 코스입니다. AI가 추천하는 맞춤형 여행 계획을 확인하세요."
       keywords="랜덤 여행, 도파민 여행, 추천 여행, 여행 코스, AI 추천, 여행 계획, 랜덤여행, 여행추천"
     />

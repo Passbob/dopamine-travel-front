@@ -167,7 +167,7 @@ const ThemeRandom = () => {
     return (
       <div className={styles.themeContainer}>
           <SEO
-            title="랜덤 여행 테마 선택"
+            title="랜덤 여행지 추천 - 도파민 여행"
             description="랜덤 여행지에서 즐길 여행 테마가 선택됩니다. 자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요."
             keywords="즉흥 여행, 랜덤 여행, 여행 테마, 자연 여행, 문화 여행, 맛집 투어, 액티비티, 테마 여행"
           />
@@ -183,7 +183,7 @@ const ThemeRandom = () => {
   return (
     <div className={styles.themeContainer}>
           <SEO
-            title="랜덤 여행 테마 선택"
+            title="랜덤 여행지 추천 - 도파민 여행"
             description="랜덤 여행지에서 즐길 여행 테마가 선택됩니다. 자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요."
             keywords="즉흥 여행, 랜덤 여행, 여행 테마, 자연 여행, 문화 여행, 맛집 투어, 액티비티, 테마 여행"
           />

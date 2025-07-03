@@ -69,7 +69,7 @@ const Main = () => {
     <div className="main-container">
       <SEO 
         title="홈"
-        description="도파민 여행 - AI 추천 기반 랜덤 여행지 생성 서비스. 어디로 갈지 고민될 때, 도파민과 함께 새로운 여행지를 발견하세요."
+        description="랜덤 여행지 추천 - 도파민 여행 - AI 추천 기반 랜덤 여행지 생성 서비스. 어디로 갈지 고민될 때, 도파민과 함께 새로운 여행지를 발견하세요."
         keywords="여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천, 여행추천, 랜덤여행"
       />
       <div className="main-content">
