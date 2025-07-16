@@ -196,11 +196,11 @@ const ProvinceSpotlight = () => {
 
   return (
     <div className={styles.mapPage}>
-        <SEO
-          title="도 선택"
-          description="여행하고 싶은 도를 선택하세요. 경기도, 강원도, 제주도 등 전국 여행지 중에서 랜덤으로 추천해드립니다."
-          keywords="도 선택, 여행지 선택, 경기도 여행, 강원도 여행, 제주도 여행, 랜덤 여행, 국내여행"
-        />
+          <SEO
+            title="랜덤 여행 추천 - 도파민 여행"
+            description="여행하고 싶은 도를 선택하세요. 경기도, 강원도, 제주도 등 전국 여행지 중에서 랜덤으로 추천해드립니다."
+            keywords="도 선택, 여행지 선택, 경기도 여행, 강원도 여행, 제주도 여행, 랜덤 여행, 국내여행"
+          />
       <div className={styles.mapContainer}>
         {/* 한국 지도 */}
         <div className={styles.koreaMapWrapper} ref={mapRef}>
