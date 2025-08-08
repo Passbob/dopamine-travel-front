@@ -22,6 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "echo 'Static build completed'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
@@ -46,6 +47,37 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "react-snap": "^1.23.0"
+  },
+  "reactSnap": {
+    "inlineCss": true,
+    "minifyHtml": true,
+    "crawlFrom": "/",
+    "include": [
+      "/",
+      "/random",
+      "/random/city",
+      "/random/theme", 
+      "/course"
+    ],
+    "skipThirdPartyRequests": true,
+    "cacheAjaxRequests": false,
+    "preloadImages": true,
+    "asyncScriptTags": false,
+    "removeBlobs": true,
+    "fixWebpackChunksIssue": false,
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "puppeteerExecutablePath": null,
+    "puppeteerIgnoreHTTPSErrors": false,
+    "publicPath": "/",
+    "minifyCss": {
+      "safe": true
+    },
+    "removeStyleTags": false,
+    "preconnectThirdParty": false
   }
 }

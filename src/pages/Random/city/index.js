@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getCitiesByProvince } from '../../../api/Random/getAllCitiesAPI';
 import styles from './City.module.css';
 import SEO from '../../../components/SEO';
+import { getPageMetadata } from '../../../utils/seoUtils';
 
 const Random = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,15 @@ const Random = () => {
   const provinceNo = searchParams.get('provinceNo');
   // location.state에서 province 정보 가져오기 (이전 방식과의 호환성 유지)
   const province = location.state?.province;
+  
+  // 파라미터가 없을 때 기본값 설정 (SEO용)
+  const defaultProvince = { name: '전국' };
+  const displayProvince = province || defaultProvince;
+  
+  // SEO 메타데이터 생성
+  const seoMetadata = getPageMetadata('random-city', { 
+    province: displayProvince.name
+  });
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -27,7 +37,7 @@ const Random = () => {
       const targetProvinceNo = provinceNo || province?.no;
       
       if (!targetProvinceNo) {
-        console.error('provinceNo가 없습니다.');
+        // 파라미터가 없을 때는 로딩만 종료하고 공갈 페이지 표시
         setIsLoading(false);
         return;
       }
@@ -120,16 +130,18 @@ const Random = () => {
   return { transform: `${rotate} translateY(-50%)` };
 };
 
-  // 페이지 타이틀에 지역 이름 표시 (provinceNo만 있고 province 객체가 없는 경우 대비)
-  const provinceName = province?.name || '선택한 지역';
+  // 페이지 타이틀에 지역 이름 표시
+  const provinceName = displayProvince.name;
 
   if (isLoading) {
     return (
       <div className={styles.randomContainer}>
           <SEO
-            title={`랜덤 여행지 추천 - 도파민 여행`}
-            description={`한국의 도시들 중에서 랜덤으로 여행지를 추천해드립니다. 어디로 갈지 고민될 때, 도파민 여행과 함께하세요.`}
-            keywords={여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천`}
+            title={seoMetadata.title}
+            description={seoMetadata.description}
+            keywords={seoMetadata.keywords}
+            type={seoMetadata.type}
+            structuredData={seoMetadata.structuredData}
           />
         <h1>{provinceName} 도시 랜덤 선택</h1>
         <div className={styles.loading}>
@@ -143,15 +155,62 @@ const Random = () => {
   return (
     <div className={styles.randomContainer}>
       <SEO 
-        title={`랜덤 여행지 추천 - 도파민 여행`}
-        description={`한국의 도시들 중에서 랜덤으로 여행지를 추천해드립니다. 어디로 갈지 고민될 때, 도파민 여행과 함께하세요.`}
-        keywords={여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천`}
+        title={seoMetadata.title}
+        description={seoMetadata.description}
+        keywords={seoMetadata.keywords}
+        type={seoMetadata.type}
+        structuredData={seoMetadata.structuredData}
       />
       <h1>{provinceName} 도시 랜덤 선택</h1>
       
-      {cities.length === 0 ? (
+      {/* 파라미터가 없을 때 안내 메시지 */}
+      {!provinceNo && !province ? (
+        <div className={styles.noParamsMessage}>
+          <h2>🎲 도시별 랜덤 여행</h2>
+          <p>전국 도시 중에서 랜덤으로 여행지를 골라보세요!</p>
+          <p>새로운 도시에서의 특별한 경험을 만나보세요.</p>
+          
+          <div className={styles.serviceFeatures}>
+            <div className={styles.feature}>
+              <h3>🎯 룰렛 방식</h3>
+              <p>재미있는 룰렛으로 운명의 도시 선택</p>
+            </div>
+            <div className={styles.feature}>
+              <h3>🏙️ 다양한 도시</h3>
+              <p>각 지역별 특색있는 도시들 중 랜덤 선택</p>
+            </div>
+            <div className={styles.feature}>
+              <h3>🗺️ 즉시 연결</h3>
+              <p>선택 후 바로 테마 선택으로 연결</p>
+            </div>
+          </div>
+          
+          <div className={styles.navigationButtons}>
+            <button onClick={() => navigate('/')}>홈으로 가기</button>
+            <button onClick={() => navigate('/random')}>지역 선택하기</button>
+          </div>
+          
+          {/* 도시 예시 */}
+          <div className={styles.cityPreview}>
+            <h3>🌟 이런 도시들이 기다리고 있어요</h3>
+            <div className={styles.cityExamples}>
+              <span className={styles.cityTag}>서울</span>
+              <span className={styles.cityTag}>부산</span>
+              <span className={styles.cityTag}>제주</span>
+              <span className={styles.cityTag}>강릉</span>
+              <span className={styles.cityTag}>경주</span>
+              <span className={styles.cityTag}>전주</span>
+              <span className={styles.cityTag}>그 외 많은 도시들...</span>
+            </div>
+          </div>
+        </div>
+      ) : cities.length === 0 ? (
         <div className={styles.errorMessage}>
           <p>도시 정보를 불러오는데 실패했습니다.</p>
+          <div className={styles.navigationButtons}>
+            <button onClick={() => navigate('/')}>홈으로 가기</button>
+            <button onClick={() => navigate('/random')}>다시 선택하기</button>
+          </div>
         </div>
       ) : (
         <>

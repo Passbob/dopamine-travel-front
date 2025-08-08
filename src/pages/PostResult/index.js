@@ -1,11 +1,24 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.css';
+import SEO from '../../components/SEO';
+import { getPageMetadata } from '../../utils/seoUtils';
 
 const PostResult = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { province, city, theme, constraint, selectedCourseKey, courseData } = location.state || {};
+  
+  // 파라미터가 없을 때 기본값 설정 (SEO용)
+  const defaultProvince = { name: '전국' };
+  const defaultCity = { name: '여행지' };
+  const defaultTheme = { name: '맞춤 테마' };
+  const defaultConstraint = { name: '자유 여행' };
+  
+  const displayProvince = province || defaultProvince;
+  const displayCity = city || defaultCity;
+  const displayTheme = theme || defaultTheme;
+  // displayConstraint는 사용하지 않으므로 제거
   
   // 선택된 코스 정보 가져오기
   const getCourseInfoArray = () => {
@@ -49,13 +62,56 @@ const PostResult = () => {
   
   const courseInfoArray = getCourseInfoArray();
   
+  // SEO 메타데이터 생성
+  const seoMetadata = getPageMetadata('result', {
+    destination: province && city ? {
+      name: `${displayProvince.name} ${displayCity.name}`,
+      description: `${displayTheme.name} 테마로 즐기는 ${displayProvince.name} ${displayCity.name} 여행`,
+      region: displayProvince.name,
+      city: displayCity.name,
+      themes: [displayTheme.name]
+    } : null
+  });
+  
   if (!province || !city || !theme || !constraint || !courseData) {
     return (
       <div className="result-container">
-        <h1>오류 발생</h1>
-        <div className="error-message">
-          <p>필요한 정보가 부족합니다.</p>
-          <button onClick={() => navigate('/')}>홈으로 돌아가기</button>
+        <SEO
+          title={seoMetadata.title}
+          description={seoMetadata.description}
+          keywords={seoMetadata.keywords}
+          type={seoMetadata.type}
+          structuredData={seoMetadata.structuredData}
+        />
+        
+        <div className="result-header">
+          <h1>🎉 여행 결과 페이지</h1>
+          <p>AI가 추천하는 맞춤형 여행 코스를 확인하세요</p>
+        </div>
+        
+        <div className="no-params-message">
+          <h2>📋 여행 결과 서비스</h2>
+          <p>선택하신 여행 코스의 상세 정보와 추천 장소들을 확인할 수 있습니다.</p>
+          
+          <div className="service-info">
+            <div className="info-item">
+              <h3>✨ 개인화된 추천</h3>
+              <p>선택한 테마와 제약조건에 맞는 최적의 여행 코스</p>
+            </div>
+            <div className="info-item">
+              <h3>📍 상세 정보</h3>
+              <p>각 장소별 설명과 추천 이유 상세 제공</p>
+            </div>
+            <div className="info-item">
+              <h3>💾 결과 저장</h3>
+              <p>여행 계획을 복사하여 저장하고 공유</p>
+            </div>
+          </div>
+          
+          <div className="navigation-buttons">
+            <button onClick={() => navigate('/')}>홈으로 가기</button>
+            <button onClick={() => navigate('/random')}>새 여행 계획하기</button>
+          </div>
         </div>
       </div>
     );
@@ -63,6 +119,14 @@ const PostResult = () => {
   
   return (
     <div className="result-container">
+      <SEO
+        title={seoMetadata.title}
+        description={seoMetadata.description}
+        keywords={seoMetadata.keywords}
+        type={seoMetadata.type}
+        structuredData={seoMetadata.structuredData}
+      />
+      
       <div className="result-header">
         <h1>{province.name} {city.name} 여행 코스</h1>
         <p>테마: {theme.name} / 제약: {constraint.name}</p>

@@ -5,6 +5,7 @@ import styles from './Course.module.css';
 import environment from '../../environments/environment';
 // SEO 컴포넌트 가져오기
 import SEO from '../../components/SEO';
+import { getPageMetadata } from '../../utils/seoUtils';
 
 const Course = () => {
   const location = useLocation();
@@ -13,6 +14,27 @@ const Course = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   
+  // 파라미터가 없을 때 기본값 설정 (SEO용)
+  const defaultProvince = { name: '전국' };
+  const defaultCity = { name: '여행지' };
+  const defaultTheme = { name: '맞춤 테마' };
+  const defaultConstraint = { name: '자유 여행' };
+  
+  const displayProvince = province || defaultProvince;
+  const displayCity = city || defaultCity;
+  const displayTheme = theme || defaultTheme;
+  // displayConstraint는 사용하지 않으므로 제거
+  
+  // SEO 메타데이터 생성
+  const seoMetadata = getPageMetadata('course', {
+    itinerary: courses.length > 0 ? {
+      title: `${displayProvince.name} ${displayCity.name} 여행 코스`,
+      description: `${displayTheme.name} 테마로 즐기는 ${displayProvince.name} ${displayCity.name} 여행`,
+      places: courses,
+      duration: '1일'
+    } : null
+  });
+  
   // 카드 관련 상태
   const [isShuffling, setIsShuffling] = useState(false);
   const [cardsReady, setCardsReady] = useState(false);
@@ -20,14 +42,46 @@ const Course = () => {
   const [showResult, setShowResult] = useState(false);
   const [courses, setCourses] = useState([]);
 
-  // 필요한 데이터가 있는지 확인
+  // 파라미터가 없을 때의 공갈 페이지 렌더링
   if (!province || !city || !theme || !constraint) {
     return (
       <div className={styles.courseContainer}>
-        <h1>오류 발생</h1>
-        <div style={{ color: 'black' }} className={styles.errorMessage}>
-          <p>필요한 정보가 부족합니다. 테마 선택 페이지로 돌아가세요.</p>
-          <button onClick={() => navigate('/')}>홈으로 돌아가기</button>
+        <SEO
+          title={seoMetadata.title}
+          description={seoMetadata.description}
+          keywords={seoMetadata.keywords}
+          type={seoMetadata.type}
+          structuredData={seoMetadata.structuredData}
+        />
+        
+        <div className={styles.courseHeader}>
+          <h1>🗺️ AI 추천 여행 코스</h1>
+          <p>맞춤형 여행 코스를 생성해드립니다</p>
+        </div>
+        
+        <div className={styles.noParamsMessage}>
+          <h2>📍 여행 코스 생성 서비스</h2>
+          <p>선택하신 여행지와 테마를 바탕으로 AI가 최적의 여행 코스를 추천해드립니다.</p>
+          
+          <div className={styles.serviceFeatures}>
+            <div className={styles.feature}>
+              <h3>🎯 맞춤형 추천</h3>
+              <p>지역, 테마, 제약조건을 고려한 개인화된 여행 코스</p>
+            </div>
+            <div className={styles.feature}>
+              <h3>🎲 랜덤 선택</h3>
+              <p>카드 뽑기 방식으로 재미있게 코스 선택</p>
+            </div>
+            <div className={styles.feature}>
+              <h3>📋 상세 정보</h3>
+              <p>각 장소별 상세 설명과 추천 이유 제공</p>
+            </div>
+          </div>
+          
+          <div className={styles.navigationButtons}>
+            <button onClick={() => navigate('/')}>홈으로 가기</button>
+            <button onClick={() => navigate('/random')}>여행지 선택하기</button>
+          </div>
         </div>
       </div>
     );
@@ -154,9 +208,11 @@ const Course = () => {
   return (
     <div className={styles.courseContainer}>
     <SEO
-      title="랜덤 여행지 추천 - 맞춤 코스 결과"
-      description="랜덤으로 추출 된 여행 코스입니다. AI가 추천하는 맞춤형 여행 계획을 확인하세요."
-      keywords="랜덤 여행, 도파민 여행, 추천 여행, 여행 코스, AI 추천, 여행 계획, 랜덤여행, 여행추천"
+      title={seoMetadata.title}
+      description={seoMetadata.description}
+      keywords={seoMetadata.keywords}
+      type={seoMetadata.type}
+      structuredData={seoMetadata.structuredData}
     />
 
       <div className={styles.courseHeader}>

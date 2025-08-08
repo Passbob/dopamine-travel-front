@@ -12,12 +12,17 @@ import SlotCounter from '../../components/SlotCounter';
 import '../../components/SlotCounter.css';
 // SEO 컴포넌트 가져오기
 import SEO from '../../components/SEO';
+// SEO 유틸리티 함수 가져오기
+import { getPageMetadata } from '../../utils/seoUtils';
 
 const Main = () => {
   // 방문자 수 상태 관리
   const [visitorCount, setVisitorCount] = useState(0);
   // 로딩 상태 관리
   const [isLoading, setIsLoading] = useState(true);
+  
+  // SEO 메타데이터 생성
+  const seoMetadata = getPageMetadata('home', { visitorCount });
 
   // 컴포넌트 마운트 시 방문자 수 가져오기
   useEffect(() => {
@@ -68,9 +73,11 @@ const Main = () => {
   return (
     <div className="main-container">
       <SEO 
-        title="홈"
-        description="랜덤 여행지 추천 - 도파민 여행 - AI 추천 기반 랜덤 여행지 생성 서비스. 어디로 갈지 고민될 때, 도파민과 함께 새로운 여행지를 발견하세요."
-        keywords="여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천, 여행추천, 랜덤여행"
+        title={seoMetadata.title}
+        description={seoMetadata.description}
+        keywords={seoMetadata.keywords}
+        type={seoMetadata.type}
+        structuredData={seoMetadata.structuredData}
       />
       <div className="main-content">
         <motion.h1 

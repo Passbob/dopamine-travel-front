@@ -5,6 +5,7 @@ import { getAllThemes } from '../../../api/Random/getAllThemeAPI';
 import { getAllConstraints } from '../../../api/Random/getAllConstraintAPI';
 import styles from './Theme.module.css';
 import SEO from '../../../components/SEO';
+import { getPageMetadata } from '../../../utils/seoUtils';
 
 const ThemeRandom = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,18 @@ const ThemeRandom = () => {
   
   // location.state에서 province와 city 정보 가져오기
   const { province, city } = location.state || {};
+  
+  // 파라미터가 없을 때 기본값 설정 (SEO용 공갈 데이터)
+  const defaultProvince = { name: '전국' };
+  const defaultCity = { name: '랜덤 여행지' };
+  const displayProvince = province || defaultProvince;
+  const displayCity = city || defaultCity;
+  
+  // SEO 메타데이터 생성
+  const seoMetadata = getPageMetadata('random-theme', { 
+    province: displayProvince.name,
+    city: displayCity.name
+  });
 
   // 결과 요소들의 opacity를 위한 state 추가
   const [summaryOpacity, setSummaryOpacity] = useState(0);
@@ -124,6 +137,10 @@ const ThemeRandom = () => {
           constraint: selectedConstraint
         }
       });
+    } else if (!province || !city) {
+      // 파라미터가 없을 때는 홈으로 안내
+      alert('여행지를 먼저 선택해주세요!');
+      navigate('/');
     }
   };
 
@@ -167,11 +184,13 @@ const ThemeRandom = () => {
     return (
       <div className={styles.themeContainer}>
           <SEO
-            title="랜덤 여행지 추천 - 도파민 여행"
-            description="랜덤 여행지에서 즐길 여행 테마가 선택됩니다. 자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요."
-            keywords="즉흥 여행, 랜덤 여행, 여행 테마, 자연 여행, 문화 여행, 맛집 투어, 액티비티, 테마 여행"
+            title={seoMetadata.title}
+            description={seoMetadata.description}
+            keywords={seoMetadata.keywords}
+            type={seoMetadata.type}
+            structuredData={seoMetadata.structuredData}
           />
-        <h1>{province?.name} {city?.name}</h1>
+        <h1>{displayProvince.name} {displayCity.name}</h1>
         <div className={styles.loading}>
           <p>테마 정보를 불러오는 중...</p>
           <div className={styles.spinner}></div>
@@ -183,13 +202,41 @@ const ThemeRandom = () => {
   return (
     <div className={styles.themeContainer}>
           <SEO
-            title="랜덤 여행지 추천 - 도파민 여행"
-            description="랜덤 여행지에서 즐길 여행 테마가 선택됩니다. 자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요."
-            keywords="즉흥 여행, 랜덤 여행, 여행 테마, 자연 여행, 문화 여행, 맛집 투어, 액티비티, 테마 여행"
+            title={seoMetadata.title}
+            description={seoMetadata.description}
+            keywords={seoMetadata.keywords}
+            type={seoMetadata.type}
+            structuredData={seoMetadata.structuredData}
           />
       <h1>{province?.name} {city?.name}</h1>
       
-      {(themes.length === 0 || constraints.length === 0) ? (
+      {/* 파라미터가 없을 때 안내 메시지 */}
+      {!province || !city ? (
+        <div className={styles.noParamsMessage}>
+          <h2>🎯 테마별 랜덤 여행</h2>
+          <p>자연, 문화, 맛집, 액티비티 등 다양한 테마로 맞춤 여행을 즐겨보세요!</p>
+          <p>먼저 여행하고 싶은 지역을 선택해주세요.</p>
+          <div className={styles.navigationButtons}>
+            <button onClick={() => navigate('/')}>홈으로 가기</button>
+            <button onClick={() => navigate('/random')}>지역 선택하기</button>
+          </div>
+          
+          {/* 테마 미리보기 (데이터가 있을 때만) */}
+          {themes.length > 0 && (
+            <div className={styles.themePreview}>
+              <h3>🎨 이런 테마들이 준비되어 있어요</h3>
+              <div className={styles.themeList}>
+                {themes.slice(0, 6).map((theme, index) => (
+                  <span key={theme.no} className={styles.themeTag}>
+                    {theme.name}
+                  </span>
+                ))}
+                {themes.length > 6 && <span className={styles.themeTag}>그 외 {themes.length - 6}개...</span>}
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (themes.length === 0 || constraints.length === 0) ? (
         <div className={styles.errorMessage}>
           <p>테마 또는 제약 정보를 불러오는데 실패했습니다.</p>
         </div>

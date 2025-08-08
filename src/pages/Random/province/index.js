@@ -5,6 +5,7 @@ import { getAllProvinces } from '../../../api/Random/getAllProvinceAPI';
 import koreaMap from '../../../assets/korea-map.png'; // 한국 지도 이미지 경로 수정 필요
 import styles from './Province.module.css';
 import SEO from '../../../components/SEO';
+import { getPageMetadata } from '../../../utils/seoUtils';
 
 // framer-motion 주요 속성 설명
 // initial: 애니메이션 시작 전 초기 상태 (opacity, scale, position 등)
@@ -30,6 +31,9 @@ const ProvinceSpotlight = () => {
   const mapRef = useRef(null);
   const [mapDimensions, setMapDimensions] = useState({ width: 600, height: 600 });
   const navigate = useNavigate();
+  
+  // SEO 메타데이터 생성
+  const seoMetadata = getPageMetadata('random');
 
   // 각 도/광역시별 상대적 좌표 (퍼센트 기준)
   const provinceRelativeCoordinates = {
@@ -178,9 +182,11 @@ const ProvinceSpotlight = () => {
     return (
       <div className={styles.mapPage}>
           <SEO
-            title="랜덤 여행 추천 - 도파민 여행"
-            description="여행하고 싶은 도를 선택하세요. 경기도, 강원도, 제주도 등 전국 여행지 중에서 랜덤으로 추천해드립니다."
-            keywords="도 선택, 여행지 선택, 경기도 여행, 강원도 여행, 제주도 여행, 랜덤 여행, 국내여행"
+            title={seoMetadata.title}
+            description={seoMetadata.description}
+            keywords={seoMetadata.keywords}
+            type={seoMetadata.type}
+            structuredData={seoMetadata.structuredData}
           />
         <div className={styles.loadingContainer}>
           <motion.div
@@ -197,9 +203,11 @@ const ProvinceSpotlight = () => {
   return (
     <div className={styles.mapPage}>
           <SEO
-            title="랜덤 여행 추천 - 도파민 여행"
-            description="여행하고 싶은 도를 선택하세요. 경기도, 강원도, 제주도 등 전국 여행지 중에서 랜덤으로 추천해드립니다."
-            keywords="도 선택, 여행지 선택, 경기도 여행, 강원도 여행, 제주도 여행, 랜덤 여행, 국내여행"
+            title={seoMetadata.title}
+            description={seoMetadata.description}
+            keywords={seoMetadata.keywords}
+            type={seoMetadata.type}
+            structuredData={seoMetadata.structuredData}
           />
       <div className={styles.mapContainer}>
         {/* 한국 지도 */}
