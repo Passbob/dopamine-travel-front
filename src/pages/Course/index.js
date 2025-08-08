@@ -24,6 +24,13 @@ const Course = () => {
   const displayCity = city || defaultCity;
   const displayTheme = theme || defaultTheme;
   // displayConstraint는 사용하지 않으므로 제거
+
+  // 카드 관련 상태
+  const [isShuffling, setIsShuffling] = useState(false);
+  const [cardsReady, setCardsReady] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [courses, setCourses] = useState([]);
   
   // SEO 메타데이터 생성
   const seoMetadata = getPageMetadata('course', {
@@ -34,13 +41,6 @@ const Course = () => {
       duration: '1일'
     } : null
   });
-  
-  // 카드 관련 상태
-  const [isShuffling, setIsShuffling] = useState(false);
-  const [cardsReady, setCardsReady] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [showResult, setShowResult] = useState(false);
-  const [courses, setCourses] = useState([]);
 
   // 파라미터가 없을 때의 공갈 페이지 렌더링
   if (!province || !city || !theme || !constraint) {
