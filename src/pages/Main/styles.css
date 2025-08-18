@@ -430,12 +430,16 @@ body {
   }
 }
 
-/* 카카오톡 공유 버튼 스타일 */
+/* 드롭다운 공유 버튼 스타일 */
 .share-section {
   position: fixed;
   bottom: 5vh;
   left: 5vw;
   z-index: 100;
+}
+
+.share-dropdown {
+  position: relative;
 }
 
 .share-btn {
@@ -466,6 +470,67 @@ body {
 .share-text {
   font-weight: 600;
   font-size: 16px;
+}
+
+/* 드롭다운 공유 메뉴 */
+.share-menu {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 10px;
+  min-width: 150px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.share-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 15px;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.share-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.share-option:last-child {
+  margin-bottom: 0;
+}
+
+.share-option-icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.share-option.facebook:hover {
+  color: #1877F2;
+}
+
+.share-option.twitter:hover {
+  color: #1DA1F2;
+}
+
+.share-option.kakao:hover {
+  color: #FEE500;
+}
+
+.share-option.copy:hover {
+  color: #7FEE70;
 }
 
 /* 내부 링크 섹션 스타일 */

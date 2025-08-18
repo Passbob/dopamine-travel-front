@@ -24,8 +24,8 @@ const Course = () => {
   const displayCity = city || defaultCity;
   const displayTheme = theme || defaultTheme;
   // displayConstraint는 사용하지 않으므로 제거
-  
-  // 카드 관련 상태 (courses를 먼저 정의)
+
+  // 카드 관련 상태
   const [isShuffling, setIsShuffling] = useState(false);
   const [cardsReady, setCardsReady] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);

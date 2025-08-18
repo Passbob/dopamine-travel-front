@@ -20,6 +20,8 @@ const Main = () => {
   const [visitorCount, setVisitorCount] = useState(0);
   // 로딩 상태 관리
   const [isLoading, setIsLoading] = useState(true);
+  // 공유 메뉴 상태 관리
+  const [showShareMenu, setShowShareMenu] = useState(false);
   
   // SEO 메타데이터 생성
   const seoMetadata = getPageMetadata('home', { visitorCount });
@@ -72,6 +74,22 @@ const Main = () => {
 
   return (
     <div className="main-container">
+      {/* SEO를 위한 정적 HTML 구조 (JS 없이도 보임) */}
+      <div className="seo-content" style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}>
+        <h1>도파민 여행 - AI 추천 기반 랜덤 여행지 생성 서비스</h1>
+        <h2>여행지 선택 고민 해결 서비스</h2>
+        <h3>AI 추천 랜덤 여행</h3>
+        <h3>지역별 랜덤 여행</h3>
+        <h3>테마별 랜덤 여행</h3>
+        <p>여행지 아직도 못 고르셨나요? AI추천 기반으로 랜덤 여행지를 정해보세요</p>
+        <p>도파민과 함께 여행을 떠난 트레블러들이 이용하는 서비스입니다.</p>
+        <nav>
+          <a href="/random">지역별 랜덤 여행</a>
+          <a href="/random/city">도시별 랜덤 여행</a>
+          <a href="/random/theme">테마별 랜덤 여행</a>
+        </nav>
+      </div>
+      
       <SEO 
         title={seoMetadata.title}
         description={seoMetadata.description}
@@ -172,7 +190,7 @@ const Main = () => {
         </div>
       </div>
       
-      {/* 카카오톡 공유 버튼 */}
+      {/* 드롭다운 공유 버튼 */}
       <motion.div 
         className="share-section"
         initial={{ opacity: 0, scale: 0 }}
@@ -186,41 +204,90 @@ const Main = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        <button 
-          className="share-btn"
-          onClick={() => {
-            if (window.Kakao) {
-              window.Kakao.Link.sendDefault({
-                objectType: 'feed',
-                content: {
-                  title: '도파민 여행 - AI 추천 랜덤 여행지',
-                  description: '여행지 고민 끝! AI가 추천하는 랜덤 여행지를 발견하세요',
-                  imageUrl: `${window.location.origin}/web-app-manifest-512x512.png`,
-                  link: {
-                    mobileWebUrl: window.location.href,
-                    webUrl: window.location.href,
-                  },
-                },
-                buttons: [
-                  {
-                    title: '여행 시작하기',
-                    link: {
-                      mobileWebUrl: window.location.href,
-                      webUrl: window.location.href,
-                    },
-                  },
-                ],
-              });
-            } else {
-              // 카카오톡이 없을 때 링크 복사
-              navigator.clipboard.writeText(window.location.href);
-              alert('링크가 복사되었습니다!');
-            }
-          }}
-        >
-          <span className="share-icon">📱</span>
-          <span className="share-text">카카오톡 공유</span>
-        </button>
+        <div className="share-dropdown">
+          <button className="share-btn" onClick={() => setShowShareMenu(!showShareMenu)}>
+            <span className="share-icon">📤</span>
+            <span className="share-text">공유</span>
+          </button>
+          
+          {showShareMenu && (
+            <motion.div 
+              className="share-menu"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+            >
+              <button 
+                className="share-option facebook"
+                onClick={() => {
+                  const url = encodeURIComponent(window.location.href);
+                  const text = encodeURIComponent('도파민 여행 - AI 추천 랜덤 여행지');
+                  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+                }}
+              >
+                <span className="share-option-icon">📘</span>
+                <span>Facebook</span>
+              </button>
+              
+              <button 
+                className="share-option twitter"
+                onClick={() => {
+                  const url = encodeURIComponent(window.location.href);
+                  const text = encodeURIComponent('도파민 여행 - AI 추천 랜덤 여행지 🚀');
+                  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+                }}
+              >
+                <span className="share-option-icon">🐦</span>
+                <span>Twitter</span>
+              </button>
+              
+              <button 
+                className="share-option kakao"
+                onClick={() => {
+                  if (window.Kakao) {
+                    window.Kakao.Link.sendDefault({
+                      objectType: 'feed',
+                      content: {
+                        title: '도파민 여행 - AI 추천 랜덤 여행지',
+                        description: '여행지 고민 끝! AI가 추천하는 랜덤 여행지를 발견하세요',
+                        imageUrl: `${window.location.origin}/web-app-manifest-512x512.png`,
+                        link: {
+                          mobileWebUrl: window.location.href,
+                          webUrl: window.location.href,
+                        },
+                      },
+                      buttons: [
+                        {
+                          title: '여행 시작하기',
+                          link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                          },
+                        },
+                      ],
+                    });
+                  } else {
+                    alert('카카오톡 공유를 위해 카카오 SDK를 로드해주세요.');
+                  }
+                }}
+              >
+                <span className="share-option-icon">💬</span>
+                <span>KakaoTalk</span>
+              </button>
+              
+              <button 
+                className="share-option copy"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert('링크가 복사되었습니다!');
+                }}
+              >
+                <span className="share-icon">🔗</span>
+                <span>링크 복사</span>
+              </button>
+            </motion.div>
+          )}
+        </div>
       </motion.div>
       
       <motion.div 
