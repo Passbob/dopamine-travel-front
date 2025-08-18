@@ -89,6 +89,15 @@ const Main = () => {
           도파민 여행
         </motion.h1>
         
+        <motion.h2 
+          className="main-subtitle"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          AI 추천 기반 랜덤 여행지 생성 서비스
+        </motion.h2>
+        
         <motion.p 
           className="main-description"
           initial={{ opacity: 0 }}
@@ -163,6 +172,57 @@ const Main = () => {
         </div>
       </div>
       
+      {/* 카카오톡 공유 버튼 */}
+      <motion.div 
+        className="share-section"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ 
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          delay: 1.4
+        }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <button 
+          className="share-btn"
+          onClick={() => {
+            if (window.Kakao) {
+              window.Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                  title: '도파민 여행 - AI 추천 랜덤 여행지',
+                  description: '여행지 고민 끝! AI가 추천하는 랜덤 여행지를 발견하세요',
+                  imageUrl: `${window.location.origin}/web-app-manifest-512x512.png`,
+                  link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
+                  },
+                },
+                buttons: [
+                  {
+                    title: '여행 시작하기',
+                    link: {
+                      mobileWebUrl: window.location.href,
+                      webUrl: window.location.href,
+                    },
+                  },
+                ],
+              });
+            } else {
+              // 카카오톡이 없을 때 링크 복사
+              navigator.clipboard.writeText(window.location.href);
+              alert('링크가 복사되었습니다!');
+            }
+          }}
+        >
+          <span className="share-icon">📱</span>
+          <span className="share-text">카카오톡 공유</span>
+        </button>
+      </motion.div>
+      
       <motion.div 
         className="inquiry-button"
         initial={{ opacity: 0, scale: 0 }}
@@ -171,13 +231,37 @@ const Main = () => {
           type: "spring",
           stiffness: 260,
           damping: 20,
-          delay: 1.2
+          delay: 1.6
         }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
         <div className="inquiry-icon">?</div>
-        <span className="inquiry-text">문의</span>
+        <span className="share-text">문의</span>
+      </motion.div>
+      
+      {/* 추가 내부 링크 섹션 */}
+      <motion.div 
+        className="internal-links-section"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.8 }}
+      >
+        <h2>🚀 더 많은 여행 옵션</h2>
+        <div className="internal-links-grid">
+          <Link to="/random" className="internal-link">
+            <h3>🎯 지역별 랜덤 여행</h3>
+            <p>전국 지역에서 랜덤으로 여행지 선택</p>
+          </Link>
+          <Link to="/random/city" className="internal-link">
+            <h3>🏙️ 도시별 랜덤 여행</h3>
+            <p>도시별로 세분화된 랜덤 여행지</p>
+          </Link>
+          <Link to="/random/theme" className="internal-link">
+            <h3>🎨 테마별 랜덤 여행</h3>
+            <p>자연, 문화, 맛집 등 테마별 여행</p>
+          </Link>
+        </div>
       </motion.div>
     </div>
   );

@@ -58,6 +58,28 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>랜덤 여행 추천 - 도파민 여행</title>
+    
+    <!-- 카카오 JavaScript SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // 카카오 SDK 초기화
+        window.addEventListener('load', function() {
+            if (typeof Kakao !== 'undefined') {
+                console.log('카카오 SDK가 로드되었습니다.');
+                
+                // 카카오 앱 키로 초기화
+                const kakaoAppKey = '13aa3a322434660f31d7c7ed1186cd28';
+                if (kakaoAppKey) {
+                    Kakao.init(kakaoAppKey);
+                    console.log('카카오 SDK가 초기화되었습니다.');
+                } else {
+                    console.log('카카오 앱 키가 설정되지 않았습니다.');
+                }
+            } else {
+                console.log('카카오 SDK 로드에 실패했습니다.');
+            }
+        });
+    </script>
   </head>
   <body>
     <noscript>
