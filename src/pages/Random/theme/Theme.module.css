@@ -194,6 +194,32 @@
   margin: 20px 0;
 }
 
+.noParamsMessage {
+  margin: 40px auto;
+  text-align: center;
+  color: #ff5252;
+}
+
+.navigationButtons{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.navigationButtons button{
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.themePreview{
+  margin: 40px auto;
+  text-align: center;
+  color: #64e8ff;
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);

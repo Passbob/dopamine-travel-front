@@ -54,7 +54,7 @@ export const createRandomTravelServiceSchema = (serviceType) => {
   const baseSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "도파민 여행 - 랜덤 여행 추천",
+    "name": "랜덤 여행 - 도파민 여행",
     "description": "AI 기반 랜덤 여행지 추천 서비스",
     "provider": {
       "@type": "Organization",
@@ -150,7 +150,7 @@ export const createWebsiteSchema = () => {
 // 페이지별 메타 데이터 생성
 export const getPageMetadata = (pageType, data = {}) => {
   const baseMetadata = {
-    title: '도파민 여행',
+    title: '랜덤 여행 - 도파민 여행',
     description: 'AI 추천 기반 랜덤 여행지 생성 서비스. 어디로 갈지 고민될 때, 도파민과 함께 새로운 여행지를 발견하세요.',
     keywords: '여행, 랜덤 여행, 여행지 추천, 도파민 여행, 국내여행, AI 추천',
     type: 'website'

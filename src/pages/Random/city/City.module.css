@@ -206,3 +206,28 @@
     font-size: 0.9rem;
   }
 } 
+
+.noParamsMessage {
+  margin: 40px auto;
+  text-align: center;
+  color: #74da79;
+}
+
+.navigationButtons{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 25px 0px;
+}
+
+.navigationButtons button{
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cityPreview{
+  color: #64e8ff;
+}

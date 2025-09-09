@@ -320,14 +320,14 @@ const Main = () => {
             <h3>🎯 지역별 랜덤 여행</h3>
             <p>전국 지역에서 랜덤으로 여행지 선택</p>
           </Link>
-          <Link to="/random/city" className="internal-link">
+          {/* <Link to="/random/city" className="internal-link">
             <h3>🏙️ 도시별 랜덤 여행</h3>
             <p>도시별로 세분화된 랜덤 여행지</p>
           </Link>
           <Link to="/random/theme" className="internal-link">
             <h3>🎨 테마별 랜덤 여행</h3>
             <p>자연, 문화, 맛집 등 테마별 여행</p>
-          </Link>
+          </Link> */}
         </div>
       </motion.div>
     </div>

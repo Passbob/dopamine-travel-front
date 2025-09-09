@@ -48,7 +48,7 @@ function AdvancedSEO({
     "@type": "AggregateRating",
     "itemReviewed": {
       "@type": "Service",
-      "name": "도파민 여행 - 랜덤 여행 추천"
+      "name": "랜덤 여행 - 도파민 여행"
     },
     "ratingValue": reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length,
     "reviewCount": reviews.length,
