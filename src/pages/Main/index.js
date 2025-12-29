@@ -22,6 +22,8 @@ const Main = () => {
   const [isLoading, setIsLoading] = useState(true);
   // 공유 메뉴 상태 관리
   const [showShareMenu, setShowShareMenu] = useState(false);
+  // 서버 점검 모달 상태 관리
+  const [showMaintenanceModal, setShowMaintenanceModal] = useState(true);
   
   // SEO 메타데이터 생성
   const seoMetadata = getPageMetadata('home', { visitorCount });
@@ -74,6 +76,43 @@ const Main = () => {
 
   return (
     <div className="main-container">
+      {/* 서버 점검 모달 */}
+      {showMaintenanceModal && (
+        <div className="maintenance-modal-overlay" onClick={() => setShowMaintenanceModal(false)}>
+          <motion.div 
+            className="maintenance-modal"
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="maintenance-modal-header">
+              <h2>🔧 서버 점검 안내</h2>
+              <button 
+                className="maintenance-modal-close"
+                onClick={() => setShowMaintenanceModal(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="maintenance-modal-content">
+              <p className="maintenance-message">
+                현재 서버 이전으로 인해<br />
+                일시적으로 운영이 중단되었습니다.
+              </p>
+              <p className="maintenance-date">
+                이전 기간: ~26.01.07
+              </p>
+              <p className="maintenance-apology">
+                불편을 드려 죄송합니다.<br />
+                빠른 시일 내에 정상화되도록 노력하겠습니다.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      )}
+      
       {/* SEO를 위한 정적 HTML 구조 (JS 없이도 보임) */}
       <div className="seo-content" style={{ position: 'absolute', left: '-9999px', visibility: 'hidden' }}>
         <h1>도파민 여행 - AI 추천 기반 랜덤 여행지 생성 서비스</h1>

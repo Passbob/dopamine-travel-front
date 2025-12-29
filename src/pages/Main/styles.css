@@ -636,3 +636,171 @@ body {
     font-size: 13px;
   }
 }
+
+/* 서버 점검 모달 스타일 */
+.maintenance-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  backdrop-filter: blur(5px);
+}
+
+.maintenance-modal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border-radius: 20px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(127, 238, 112, 0.3);
+  overflow: hidden;
+}
+
+.maintenance-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(127, 238, 112, 0.1);
+}
+
+.maintenance-modal-header h2 {
+  color: #7FEE70;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.maintenance-modal-close {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 28px;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.maintenance-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+.maintenance-modal-content {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.maintenance-message {
+  color: #FFFFFF;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.maintenance-date {
+  color: #7FEE70;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  padding: 15px;
+  background: rgba(127, 238, 112, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(127, 238, 112, 0.3);
+}
+
+.maintenance-apology {
+  color: #E1E1E1;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+/* 반응형 모달 스타일 */
+@media (max-width: 768px) {
+  .maintenance-modal {
+    width: 95%;
+    max-width: 400px;
+  }
+
+  .maintenance-modal-header {
+    padding: 20px 25px;
+  }
+
+  .maintenance-modal-header h2 {
+    font-size: 20px;
+  }
+
+  .maintenance-modal-content {
+    padding: 30px 20px;
+  }
+
+  .maintenance-message {
+    font-size: 18px;
+  }
+
+  .maintenance-date {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  .maintenance-apology {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .maintenance-modal {
+    width: 90%;
+    border-radius: 15px;
+  }
+
+  .maintenance-modal-header {
+    padding: 15px 20px;
+  }
+
+  .maintenance-modal-header h2 {
+    font-size: 18px;
+  }
+
+  .maintenance-modal-close {
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .maintenance-modal-content {
+    padding: 25px 15px;
+  }
+
+  .maintenance-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .maintenance-date {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .maintenance-apology {
+    font-size: 13px;
+  }
+}
