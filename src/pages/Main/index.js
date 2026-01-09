@@ -102,7 +102,7 @@ const Main = () => {
                 일시적으로 운영이 중단되었습니다.
               </p>
               <p className="maintenance-date">
-                이전 기간: ~26.01.07
+                이전 기간: ~26.01.18
               </p>
               <p className="maintenance-apology">
                 불편을 드려 죄송합니다.<br />
