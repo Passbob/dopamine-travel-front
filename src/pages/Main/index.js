@@ -23,7 +23,7 @@ const Main = () => {
   // 공유 메뉴 상태 관리
   const [showShareMenu, setShowShareMenu] = useState(false);
   // 서버 점검 모달 상태 관리
-  const [showMaintenanceModal, setShowMaintenanceModal] = useState(true);
+  const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
   
   // SEO 메타데이터 생성
   const seoMetadata = getPageMetadata('home', { visitorCount });
